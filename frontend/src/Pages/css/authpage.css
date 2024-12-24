@@ -75,3 +75,8 @@ form button:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
 }
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
