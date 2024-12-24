@@ -1,0 +1,23 @@
+.home-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: var(--secondary-color);
+    color: var(--primary-text-color);
+    text-align: center;
+}
+
+.home-main h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.home-main p {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0  0 20px 0;
+    max-width: 800px;
+}

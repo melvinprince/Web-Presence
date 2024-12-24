@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "node": "^23.5.0",
+    "pg": "^8.13.1",
+    "pg-promise": "^11.10.2",
+    "psql": "^0.0.1"
+  }
+}

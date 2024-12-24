@@ -1,0 +1,16 @@
+.calltoaction-button {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.calltoaction-button:hover {
+  background-color: var(--primary-text-color);
+  color: var(--secondary-color);
+}

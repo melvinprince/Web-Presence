@@ -1,0 +1,17 @@
+.header {
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.header .logo {
+    margin-left: 2%;
+}
+
+.header .links {
+    display: flex;
+    gap: 10px;
+    margin-right: 2%;
+}

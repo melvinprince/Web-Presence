@@ -1,0 +1,77 @@
+.authpage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-color)
+}
+
+.authpage .content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  background-color: var(--primary-text-color);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--secondary-text-color);
+  width: 350px;
+}
+
+.auth-btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.auth-btn:hover {
+  opacity: 0.8;
+}
+
+.active.auth-btn {
+  background-color: var(--secondary-color); /* Blue */
+  color: var(--primary-color);
+}
+
+.form-content {
+  margin-bottom: 20px;
+}
+
+.form-content label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--primary-color); /* Grayish label color */
+}
+
+.form-content input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-content input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+}
+
+form button {
+  background-color: var(--primary-color);
+  color: var(--secondary-text-color);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}

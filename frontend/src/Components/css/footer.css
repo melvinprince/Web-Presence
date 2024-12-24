@@ -1,0 +1,13 @@
+.footer {
+    background-color: var(--primary-color);
+    text-align: center;
+    height: 40px;
+}
+
+.footer p {
+    color: var(--primary-text-color);
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 10px;
+}

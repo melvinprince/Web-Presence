@@ -1,0 +1,45 @@
+.howitworks {
+  background-color: var(--secondary-text-color);
+  color: var(--primary-color);
+  padding: 8rem 4rem 4rem 4rem;
+  height: 700px;
+}
+
+.howitworks h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 30px 0;
+}   
+
+.howitworks-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.howitworks-card .step {
+  background-color: var(--primary-color);
+  text-align: justify;
+  height: 200px;
+  border-radius: 3%;
+  color: var(--secondary-text-color);
+}
+.howitworks-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 20px 20px;
+  /* text-align: center; */
+}
+
+.howitworks-card p {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0 20px 20px 10px;
+}
+.howitworks .cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
