@@ -2,7 +2,7 @@ import { useState } from "react"
 import Header from "../Components/Header"
 import Footer from "../Components/Footer"
 import "./css/authpage.css"
-import { loginUser, checkUser, registerUser } from "../services/authServices"
+import { loginUser, registerUser } from "../services/authServices"
 
 export default function AuthPage() {
 
@@ -14,42 +14,30 @@ export default function AuthPage() {
     const handleChangeTab = (tab) => setActiveTab(tab)
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        if(activeTab === "signin") {
-            try {        
-                const result = await loginUser(email, password);
-                console.log("Succesfully Logged In", result);
-            } catch (err) {
-                try {
-                    const result = await checkUser(email, password);
-                    alert("Entered Wrong Password")
-                    console.log(result);
-                } catch (err) {
-                    alert("User does not exist")
-                    console.log(err);
-                    
-                }
-                console.log("Failed to Login", err); 
-            }
-        } else {
-            if(password !== confirmPassword) {
-                alert("Passwords do not match")
-                return
-            }
-            try {
-                const result = await registerUser(email, password);
-                console.log("Succesfully Registered", result);
-            } catch (err) {
-                try {
-                    const result = await checkUser(email, password);
-                    alert("User already exists")
-                    console.log(result);
-                } catch (err) {
-                    console.log("Failed to Register", err);
-                }
-            }
+    e.preventDefault();
+
+    if (activeTab === "signin") {
+      try {
+        const result = await loginUser(email, password);
+        console.log("Successfully Logged In", result);
+        // Handle successful login (e.g., redirect to dashboard)
+      } catch (err) {
+        alert(err.message); // Display the error message from the API
+      }
+    } else {
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      try {
+        const result = await registerUser(email, password);
+        console.log("Successfully Registered", result);
+        // Handle successful registration (e.g., redirect to login page)
+      } catch (err) {
+            alert(err.message); // Display the error message from the API}
         }
     }
+  };
 
     return (
         <div className="authpage">
