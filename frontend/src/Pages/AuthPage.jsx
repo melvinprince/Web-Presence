@@ -2,7 +2,7 @@ import { useState } from "react"
 import Header from "../Components/Header"
 import Footer from "../Components/Footer"
 import "./css/authpage.css"
-import axios from "../services/axiosInstance"
+import { loginUser, checkUser, registerUser } from "../services/authServices"
 
 export default function AuthPage() {
 
@@ -16,15 +16,18 @@ export default function AuthPage() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(activeTab === "signin") {
-            try {                
-                const result = await axios.post("/user/checkpass", {email, password});
+            try {        
+                const result = await loginUser(email, password);
                 console.log("Succesfully Logged In", result);
             } catch (err) {
                 try {
-                    const result = await axios.post("/user/checkuser", {email, password});
-                    console.log("Entered Wrong Pssword", result);
+                    const result = await checkUser(email, password);
+                    alert("Entered Wrong Password")
+                    console.log(result);
                 } catch (err) {
-                    console.log("User Not Registered", err);
+                    alert("User does not exist")
+                    console.log(err);
+                    
                 }
                 console.log("Failed to Login", err); 
             }
@@ -34,10 +37,16 @@ export default function AuthPage() {
                 return
             }
             try {
-                const result = await axios.post("/user/register", {email, password});
+                const result = await registerUser(email, password);
                 console.log("Succesfully Registered", result);
             } catch (err) {
-                console.log("Failed to Register", err);
+                try {
+                    const result = await checkUser(email, password);
+                    alert("User already exists")
+                    console.log(result);
+                } catch (err) {
+                    console.log("Failed to Register", err);
+                }
             }
         }
     }
