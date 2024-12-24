@@ -20,9 +20,8 @@ export default function AuthPage() {
       try {
         const result = await loginUser(email, password);
         console.log("Successfully Logged In", result);
-        // Handle successful login (e.g., redirect to dashboard)
       } catch (err) {
-        alert(err.message); // Display the error message from the API
+        alert(err.message); 
       }
     } else {
       if (password !== confirmPassword) {
@@ -32,10 +31,9 @@ export default function AuthPage() {
       try {
         const result = await registerUser(email, password);
         console.log("Successfully Registered", result);
-        // Handle successful registration (e.g., redirect to login page)
       } catch (err) {
-            alert(err.message); // Display the error message from the API}
-        }
+            alert(err.message); 
+      }
     }
   };
 

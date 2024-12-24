@@ -27,11 +27,8 @@ class User {
             const result = await db.oneOrNone(
                 `SELECT * FROM users WHERE username = $1`, [email]
             );
-            console.log("models/result", result);
             return result;
-            
         } catch(err) {
-            console.log("Failed to find user", err);
             throw err;
         }
     }
