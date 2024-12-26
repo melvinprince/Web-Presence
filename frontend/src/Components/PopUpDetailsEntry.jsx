@@ -1,14 +1,65 @@
 import "./css/popupdetailsentry.css";
+import { useState, useEffect } from "react";
 
-export default function PopUpDetailsEntry({handleClose, onSubmit}) {
+export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails = {} }) {
+    // State for form data
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        title: "",
+        education: "",
+        projects: "",
+        skills: "",
+        languages: "",
+        experience: "",
+        date_of_birth: "",
+        nationality: "",
+        current_country: "",
+    });
+
+    // Update state when userDetails prop changes
+    useEffect(() => {
+        setFormData({
+            name: userDetails.name || "",
+            email: userDetails.email || "",
+            title: userDetails.title || "",
+            education: userDetails.education || "",
+            projects: userDetails.projects || "",
+            skills: userDetails.skills || "",
+            languages: userDetails.languages || "",
+            experience: userDetails.experience || "",
+            date_of_birth: userDetails.date_of_birth || "",
+            nationality: userDetails.nationality || "",
+            current_country: userDetails.current_country || "",
+        });
+    }, [userDetails]);
+
+    // Handle input change
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        onSubmit(data);
-    }
+        onSubmit(formData);
+    };
 
+    // Field configuration
+    const fields = [
+        { name: "name", label: "Name" },
+        { name: "email", label: "Email", type: "email" },
+        { name: "title", label: "Title" },
+        { name: "education", label: "Education" },
+        { name: "projects", label: "Projects" },
+        { name: "skills", label: "Skills" },
+        { name: "languages", label: "Languages" },
+        { name: "experience", label: "Experience" },
+        { name: "date_of_birth", label: "Date of Birth", type: "date" },
+        { name: "nationality", label: "Nationality" },
+        { name: "current_country", label: "Current Country" },
+    ];
 
     return (
         <div className="popup-details-entry">
@@ -16,53 +67,21 @@ export default function PopUpDetailsEntry({handleClose, onSubmit}) {
                 <button className="close-button" onClick={handleClose}>×</button>
                 <h2>Enter Your Details</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" name="name" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" name="title" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="education">Education</label>
-                        <input type="text" id="education" name="education" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="projects">Projects</label>
-                        <input type="text" id="projects" name="projects" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="projects">Experience</label>
-                        <input type="text" id="experience" name="experience" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="skills">Skills</label>
-                        <input type="text" id="skills" name="skills" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="languages">Languages</label>
-                        <input type="text" id="languages" name="languages" required />
-                    </div>-
-                    <div className="form-group">
-                        <label htmlFor="date_of_birth">Date of Birth</label>
-                        <input type="date" id="date_of_birth" name="date_of_birth" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="nationality">Nationality</label>
-                        <input type="text" id="nationality" name="nationality" required />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="current_country">Current Country</label>
-                        <input type="text" id="current_country" name="current_country" required />
-                    </div>
+                    {fields.map(({ name, label, type = "text" }) => (
+                        <div className="form-group" key={name}>
+                            <label htmlFor={name}>{label}</label>
+                            <input
+                                type={type}
+                                id={name}
+                                name={name}
+                                value={formData[name]}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    ))}
                     <button type="submit">Submit</button>
                 </form>
             </div>
         </div>
-    )
+    );
 }

@@ -8,6 +8,7 @@ const autheticatedToken = require('../middleware/authMiddleware');
 router.post("/register", userControllers.createUser);
 router.post("/login", userControllers.findUser);
 router.post("/add-details", autheticatedToken, userDetailsControllers.createUserDetails);
+router.put("/update-details", autheticatedToken, userDetailsControllers.updateUserDetails);
 router.get("/get-details", autheticatedToken, userDetailsControllers.fetchUserDetails);
 
 module.exports = router;

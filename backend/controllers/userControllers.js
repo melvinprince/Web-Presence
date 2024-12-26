@@ -1,25 +1,26 @@
 const User = require("../models/userModels");
 const bcrypt = require("bcrypt");
-const { log } = require("console");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const createUser = async (req, res) => {
     // console.log("triggered createUser controller", req.body);
     
-  const userData = req.body;
+    const userData = req.body;
 
-  try {
-    const result = await User.createUser(userData);
-    log
-    res.status(200).json({ message: "User created successfully" });
-  } catch (err) {
-    if (err.message === "User with this email already exists") {
-      res.status(400).json({ message: err.message });
-    } else {
-      res.status(500).json({ message: "Server error" });
+    try {
+        const result = await User.createUser(userData);
+        const token = jwt.sign({ userId: result.id }, process.env.JWT_SECRET);
+        // console.log("token from usercontroller.js", token);
+        
+        res.status(200).json({ message: "User created successfully", token, userId: result.id });
+    } catch (err) {
+        if (err.message === "User with this email already exists") {
+        res.status(400).json({ message: err.message });
+        } else {
+        res.status(500).json({ message: "Server error" });
+        }
     }
-  }
 };
 
 

@@ -1,13 +1,18 @@
-const { log } = require("console");
+// const { log } = require("console");
 const jwt = require("jsonwebtoken");
 
 const autheticatedToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
+//   console.log(authHeader);
+  
+  
   if (!authHeader) {
     return res.status(401).json({ message: "No token provided" });
   }
 
   const token = authHeader.split(" ")[1];
+//   console.log(token);
+  
   if (!token) {
     return res
       .status(401)
@@ -20,9 +25,9 @@ const autheticatedToken = (req, res, next) => {
       return res.status(403).json({ message: "Invalid token" });
     }
 
-    console.log("Authenticated User:", user); // Log the decoded user for debugging
+    // console.log("Authenticated User:", user); // Log the decoded user for debugging
     req.userId = user.userId;
-    log("User ID:", req.userId);
+    // console.log("User ID:", req.userId);
     next();
   });
 };

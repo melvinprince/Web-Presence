@@ -9,12 +9,29 @@ const createUserDetails = async (req, res) => {
     const user_id = req.userId;
     const userData = req.body;
 
-    console.log("userData nnnnnnnnn", userData.name);
+    // console.log("userData nnnnnnnnn", userData.name);
     
 
     try {
         const result = await userDetails.createUserDetails(user_id, userData);
         res.status(200).json({ message: "User details created successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+const updateUserDetails = async (req, res) => {
+    console.log("triggered updateUserDetails controller");
+    console.log("req.body", req.body);
+    console.log("req.userId", req.userId);
+    
+    const user_id = req.userId;
+    const userData = req.body;
+
+    try {
+        const result = await userDetails.updateUserDetails(user_id, userData);
+        console.log("table updated");
+        res.status(200).json({ message: "User details updated successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error" });
     }
@@ -41,5 +58,6 @@ const fetchUserDetails = async (req, res) => {
 
 module.exports = {
     createUserDetails,
+    updateUserDetails,
     fetchUserDetails
 }

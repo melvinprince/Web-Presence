@@ -2,7 +2,7 @@ import Header from "../Components/Header"
 import Footer from "../Components/Footer"
 import PopUpDetailsEntry from "../Components/PopUpDetailsEntry"
 import { useState, useEffect } from "react"
-import { addUserDetails as addUserDetailsService, getUserDetails } from "../services/userDetailsService"
+import { addUserDetails, getUserDetails, updateUserDetails } from "../services/userDetailsService"
 
 export default function Dashboard() {
     const [name, setName] = useState("");
@@ -17,35 +17,13 @@ export default function Dashboard() {
     const [nationality, setNationality] = useState("");
     const [current_country, setCurrentCountry] = useState("");
 
+    const [idPresent, setIdPresent] = useState(false);
+
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const handleOpen = () => setIsPopupVisible(true);
     const handleClose = () => setIsPopupVisible(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getUserDetails();
-                setName(data.name);
-                setEmail(data.email);
-                setTitle(data.title);
-                setEducation(data.education);
-                setProjects(data.projects);
-                setSkills(data.skills);
-                setLanguages(data.languages);
-                setExperience(data.experience);
-                setDateOfBirth(data.date_of_birth);
-                setNationality(data.nationality);
-                setCurrentCountry(data.current_country);
-            } catch (error) {
-                handleOpen();
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, []);
-    
-    const handleUserDetailsSubmit = async (data) => {
-        // Update the local state with the form data
+    const setData = (data) => {
         setName(data.name);
         setEmail(data.email);
         setTitle(data.title);
@@ -57,11 +35,44 @@ export default function Dashboard() {
         setDateOfBirth(data.date_of_birth);
         setNationality(data.nationality);
         setCurrentCountry(data.current_country);
+    }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getUserDetails();
+                console.log("data from dashboard", data);
+                if (data.user_id) {
+                    setIdPresent(true);
+                }
+                setData(data);
+                
+            } catch (error) {
+                handleOpen();
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, []);
+    
+    const handleUserDetailsSubmit = async (data) => {
+        // Update the local state with the form data
+        setData(data);
+        console.log("data from handleUserDetailsSubmit dasghboard", data);
         try {
             // Pass the data to the service function
-            await addUserDetailsService(data); 
-            handleClose(); // Close the popup on success
+            console.log("idpresent from dashboard", idPresent);
+            
+            if (idPresent) {
+                // console.log("idpresent from dashboard", idPresent);
+                await updateUserDetails(data);
+                handleClose();
+
+            } else {
+                await addUserDetails(data); 
+                setIdPresent(true);
+                handleClose();
+            }
         } catch (error) {
             console.error(error);
         }
@@ -84,9 +95,20 @@ export default function Dashboard() {
                     <h3>Date of Birth : {date_of_birth}</h3>
                     <h3>Nationality : {nationality}</h3>
                     <h3>Current Country: {current_country}</h3>
+                    <button onClick={handleOpen}>Add/Edit Details</button>
                 </div>
             </div>
-            {isPopupVisible && <PopUpDetailsEntry handleClose={handleClose} onSubmit={handleUserDetailsSubmit} />}
+            {isPopupVisible && 
+                <PopUpDetailsEntry 
+                    handleClose={handleClose} 
+                    onSubmit={handleUserDetailsSubmit}
+                    userDetails={{
+                        name, email, title, education, 
+                        projects, skills, languages, 
+                        experience, date_of_birth, nationality, current_country
+                    }}        
+                />
+            }
             <Footer />
         </div>
     );

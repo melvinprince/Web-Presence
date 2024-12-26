@@ -12,6 +12,7 @@ const loginUser = async (email, password) => {
 const registerUser = async (email, password) => {
   try {
     const { data } = await axios.post("/user/register", { email, password });
+    console.log("registerUser data from authservice.js front end", data);
     return data;
   } catch (err) {
     throw new Error(err.response?.data?.message || "Failed to register.");
