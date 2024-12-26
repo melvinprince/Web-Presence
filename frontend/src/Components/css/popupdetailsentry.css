@@ -1,0 +1,84 @@
+/* Styles for Popup Container */
+.popup-details-entry {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000;
+}
+
+/* Styles for Popup Content */
+.popup-details-entry-content {
+  width: 90%;
+  height: 90%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto; /* Adds scrolling for overflow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* For close button positioning */
+}
+
+/* Close Button */
+.popup-details-entry-content .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff5e5e;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-details-entry-content .close-button:hover {
+  background-color: #ff2e2e;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}

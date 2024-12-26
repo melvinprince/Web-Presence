@@ -1,27 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import "./css/authpage.css";
 import { loginUser, registerUser } from "../services/authServices";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
   const [activeTab, setActiveTab] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null); // Initialize error state to null
+  const [error, setError] = useState(null); 
+  const navigate = useNavigate();
 
   const handleChangeTab = (tab) => setActiveTab(tab);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors before submission
+    setError(null); 
 
     if (activeTab === "signin") {
       try {
         const result = await loginUser(email, password);
-        console.log("Successfully Logged In", result);
-        // Handle successful login (e.g., redirect to dashboard)
+        navigate("/dashboard");
+        localStorage.setItem("token", result.token);
+        console.log(token);
+        
       } catch (err) {
         setError(err.message );
       }
@@ -32,8 +36,11 @@ export default function AuthPage() {
       }
       try {
         const result = await registerUser(email, password);
-        console.log("Successfully Registered", result);
-        // Handle successful registration (e.g., redirect to login page)
+        navigate("/dashboard");
+        console.log("Successfully Registered", result.userId);
+        localStorage.setItem("token", result.token);
+        console.log(token);
+        
       } catch (err) {
         setError(err.message);
       }
