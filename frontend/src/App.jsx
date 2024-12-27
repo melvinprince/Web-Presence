@@ -5,7 +5,8 @@ import Dashboard from './Pages/Dashboard';
 import Support from './Pages/Support';
 import './App.css';
 import AuthPage from './Pages/AuthPage';
-import Template from './Templates/Modern and Minimal Template/template';
+import Template from './Templates/Black And White Elegant Template/template'
+
 
 export default function App() {
   return (

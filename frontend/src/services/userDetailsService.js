@@ -1,58 +1,45 @@
 import axios from "./axiosInstance";
 
 const addUserDetails = async (dataToSubmit) => {
-
-    // const user_details = { name, email, title, education, projects, skills, languages, date_of_birth, nationality, current_country};
-    console.log("initial user details from adduserdeatils servbcies", dataToSubmit);
-    
-
-    try {
-        const token = localStorage.getItem("token"); // Get token from storage
-        // console.log("add user details token: from userdetauils service.js front end", token);
-        const { data } = await axios.post("/user/add-details", 
-            dataToSubmit, 
-            { headers: {
-                Authorization: `Bearer ${token}`, // Attach token to request
-            },
-            });
-        return data;
-    } catch (err) {
-        throw new Error(err.response?.data?.message || "Failed to add user details.");
-    }
-}
+  try {
+    const token = localStorage.getItem("token"); // Get token from storage
+    const { data } = await axios.post("/user/add-details", dataToSubmit, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token to request
+      },
+    });
+    return data;
+  } catch (err) {
+    throw new Error(
+      err.response?.data?.message || "Failed to add user details."
+    );
+  }
+};
 
 const updateUserDetails = async (dataToSubmit) => {
-    try {
-        console.log("triggered update");
-        
-        const token = localStorage.getItem("token"); // Get token from storage
-        const { data } = await axios.put("/user/update-details", 
-            dataToSubmit, 
-            { headers: {
-                Authorization: `Bearer ${token}`, // Attach token to request
-            },
-            });
-        return data;
-    } catch (err) {
-        throw new Error(err.response?.data?.message || "Failed to update user details.");
-    }
-}
+  try {
+    const token = localStorage.getItem("token"); // Get token from storage
+    const { data } = await axios.put("/user/update-details", dataToSubmit, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token to request
+      },
+    });
+    return data;
+  } catch (err) {
+    throw new Error(
+      err.response?.data?.message || "Failed to update user details."
+    );
+  }
+};
 
 const getUserDetails = async () => {
   try {
-    const token = localStorage.getItem("token"); 
-    console.log("get user details token:", token);
-    // Get token from storage
+    const token = localStorage.getItem("token");
     const { data } = await axios.get("/user/get-details", {
       headers: {
         Authorization: `Bearer ${token}`, // Attach token to request
       },
     });
-    console.log("getuserdetaios/service.js triggered");
-    
-    // const {data} = await axios.get("/user/get-details");
-    console.log("get user details data:", data);
-    
     return data;
   } catch (err) {
     throw new Error(
@@ -61,6 +48,22 @@ const getUserDetails = async () => {
   }
 };
 
+// New function to handle image upload
+const uploadUserImage = async (formData) => {
+  try {
+    const token = localStorage.getItem("token"); // Get token from storage
+    console.log("formdata from service", formData);
+    
+    const { data } = await axios.post("/user/upload-image", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data", // Ensure the content type is multipart/form-data for file uploads
+        Authorization: `Bearer ${token}`, // Attach token to request
+      },
+    });
+    return data; // Assuming the response contains the image URL or relevant data
+  } catch (err) {
+    throw new Error(err.response?.data?.message || "Failed to upload image.");
+  }
+};
 
-
-export { addUserDetails, getUserDetails, updateUserDetails };
+export { addUserDetails, getUserDetails, updateUserDetails, uploadUserImage };

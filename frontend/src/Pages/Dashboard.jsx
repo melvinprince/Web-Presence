@@ -2,10 +2,12 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import PopUpDetailsEntry from "../Components/PopUpDetailsEntry";
 import { useState, useEffect } from "react";
-import { addUserDetails, getUserDetails, updateUserDetails } from "../services/userDetailsService";
+import { addUserDetails, getUserDetails, updateUserDetails, uploadUserImage } from "../services/userDetailsService";
 import TemplateSelector from "../Components/TemplateSelector";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../actions/userActions";
+import "./css/dashboard.css";
+
 
 export default function Dashboard() {
     const dispatch = useDispatch();
@@ -41,7 +43,7 @@ export default function Dashboard() {
         setDateOfBirth(data.date_of_birth);
         setNationality(data.nationality);
         setCurrentCountry(data.current_country);
-        setImage(data.image); // Set the image URL when user data is fetched
+        setImage(data.image_url); // Set the image URL when user data is fetched
     };
 
     useEffect(() => {
@@ -77,6 +79,25 @@ export default function Dashboard() {
         }
     };
 
+    // Handle file upload
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        console.log("File:", file);
+        
+        const formData = new FormData();
+        formData.append("image", file);
+        console.log(formData);
+
+        try {
+            const response = await uploadUserImage(formData);
+            if (response && response.imageUrl) {
+                setImage(response.imageUrl); // Update the state with the new image URL
+            }
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    };
+
     const userDetails = { name, email, title, education, projects, skills, languages, experience, date_of_birth, nationality, current_country, image };
 
     return (
@@ -85,6 +106,7 @@ export default function Dashboard() {
             <div className="dashboard-content">
                 <h1>Dashboard</h1>
                 <div className="details">
+                    {image && <img src={image} alt="User Profile" />}
                     <h3>Name : {name}</h3>
                     <h3>Email : {email}</h3>
                     <h3>Title : {title}</h3>
@@ -97,6 +119,14 @@ export default function Dashboard() {
                     <h3>Nationality : {nationality}</h3>
                     <h3>Current Country: {current_country}</h3>
                 </div>
+
+                {/* File upload button */}
+                <input 
+                    type="file" 
+                    name="image" 
+                    accept="image/*" 
+                    onChange={handleImageUpload}
+                />
                 <button onClick={handleOpen}>Add/Edit Details</button>
             </div>
             <TemplateSelector userDetails={userDetails} />
