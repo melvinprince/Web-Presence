@@ -14,7 +14,6 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Static Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/authpage" element={<AuthPage />} />
         <Route path="/details-entry" element={<DetailsEntry />} />

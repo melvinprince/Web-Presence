@@ -32,6 +32,7 @@ export default function Dashboard() {
     const handleClose = () => setIsPopupVisible(false);
 
     const setData = (data) => {
+
         setName(data.name);
         setEmail(data.email);
         setTitle(data.title);
