@@ -1,0 +1,44 @@
+# Node.js dependencies
+/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+
+# Build directories
+/dist/
+/build/
+/public/
+
+# Front-end build directory (for Vite or React app)
+.vite/
+/build/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE settings (optional, depending on your editor)
+.idea/
+.vscode/
+
+# Package-lock and Yarn-lock files (optional, depending on package manager)
+package-lock.json
+yarn.lock
+
+# Coverage reports (if you are using testing frameworks)
+coverage/
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Jest and other testing-related files
+jest/
