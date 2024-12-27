@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./css/templateselector.css";
-
-
+import blackAndWhitePreview from "../Templates/BlackAndWhite/preview.png";
+import minimalAndModernPreview from "../Templates/MinimalAndModern/preview.png";
 
 export default function TemplateSelector() {
     return (
@@ -9,14 +9,15 @@ export default function TemplateSelector() {
             <h3>Select a template</h3>
             <div className="templates">
                 <div className="template">
-                <img src="../Templates/BlackAndWhite/preview.png" alt="" />
-                <Link to="/template/black-and-white">Black And White Template</Link>
+                    <img src={blackAndWhitePreview} alt="Black And White Template" />
+                    <Link to="/template/black-and-white">Black And White Template</Link>
                 </div>
                 <div className="template">
-                <img src="../Templates/MinimalAndModern/preview.png" alt="" />
-                <Link to="/template/minimal-and-modern">Minimal And Modern</Link>
+                    <img src={minimalAndModernPreview} alt="Minimal And Modern Template" />
+                    <Link to="/template/minimal-and-modern">Minimal And Modern</Link>
                 </div>
             </div>
         </div>
     );
 }
+

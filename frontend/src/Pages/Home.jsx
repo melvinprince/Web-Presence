@@ -7,7 +7,7 @@ import Features from "../Components/Features";
 export default function Home() {
     return (
         <div>
-            <Header loggedIN={false} />
+            <Header loggedIn={false} />
             <HomeMain />
             <Features />
             <Howitworks />
