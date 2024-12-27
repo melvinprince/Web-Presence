@@ -69,10 +69,12 @@ export default function Dashboard() {
         try {
             if (idPresent) {
                 await updateUserDetails(data);
+                dispatch(setUserDetails(data));
                 handleClose();
             } else {
                 await addUserDetails(data); 
                 setIdPresent(true);
+                dispatch(setUserDetails(data));
                 handleClose();
             }
         } catch (error) {
