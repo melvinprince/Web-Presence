@@ -1,4 +1,5 @@
 import "./css/popupdetailsentry.css";
+import { uploadUserImage } from "../services/userDetailsService";
 import { useState, useEffect } from "react";
 
 export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails = {} }) {
@@ -15,6 +16,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         date_of_birth: "",
         nationality: "",
         current_country: "",
+        image_url: "",  // Updated to image_url (make sure this matches what the backend expects)
     });
 
     // Update state when userDetails prop changes
@@ -31,6 +33,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
             date_of_birth: userDetails.date_of_birth || "",
             nationality: userDetails.nationality || "",
             current_country: userDetails.current_country || "",
+            image_url: userDetails.image || "",  // Make sure you're setting the image_url here
         });
     }, [userDetails]);
 
@@ -61,6 +64,29 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         { name: "current_country", label: "Current Country" },
     ];
 
+    // Handle file upload
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        console.log("File:", file);
+        
+        const formData = new FormData();
+        formData.append("image", file);
+        console.log(formData);
+
+        try {
+            const response = await uploadUserImage(formData);
+            if (response && response.imageUrl) {
+                // Update the form data with the uploaded image URL
+                setFormData((prevState) => ({
+                    ...prevState,
+                    image_url: response.imageUrl,  // Set the image URL
+                }));
+            }
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    };
+
     return (
         <div className="popup-details-entry">
             <div className="popup-details-entry-content">
@@ -79,6 +105,15 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                             />
                         </div>
                     ))}
+                    <div className="form-group">
+                        <label htmlFor="image">Profile Image</label>
+                        <input 
+                            type="file" 
+                            name="image" 
+                            accept="image/*" 
+                            onChange={handleImageUpload}
+                        />
+                    </div>
                     <button type="submit">Submit</button>
                 </form>
             </div>

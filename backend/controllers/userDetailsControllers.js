@@ -59,6 +59,7 @@ const fetchUserDetails = async (req, res) => {
 // Upload user image
 const uploadUserImage = async (req, res) => {
   console.log("triggered uploadUserImage controller");
+  console.log("req.file", req.file.filename);
   console.log("req.file", req.file);
   console.log("req.userId", req.userId);
 
