@@ -34,6 +34,10 @@ export default function AuthPage() {
         setError("Passwords do not match");
         return;
       }
+      if (password.length < 8) {
+        setError("Password must be at least 8 characters long");
+        return;
+      }
       try {
         const result = await registerUser(email, password);
         navigate("/dashboard");
@@ -65,14 +69,15 @@ export default function AuthPage() {
             Sign-Up
           </button>
           <form onSubmit={handleSubmit}>
-            {error && <div className="error">{error}</div>} {/* Display error if present */}
+            {error && <div className="error">{error}</div>}
             <div className="email form-content">
               <label htmlFor="email">Email</label>
               <input
-                type="text"
+                type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="password form-content">
@@ -82,6 +87,7 @@ export default function AuthPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             {activeTab === "signup" && (
@@ -92,6 +98,7 @@ export default function AuthPage() {
                   id="confirm-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
               </div>
             )}
