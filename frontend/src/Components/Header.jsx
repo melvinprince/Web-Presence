@@ -9,6 +9,7 @@ export default function Header() {
                 <Link to="/">Web Presence</Link>
             </div>
             <div className="links">
+                <Link to="/template">Template</Link>
                 <Link to="/authpage">SignUp/SignIn</Link>
                 <Link to="/support">Support</Link>
             </div>

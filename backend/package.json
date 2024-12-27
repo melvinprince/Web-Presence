@@ -6,6 +6,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "node": "^23.5.0",
     "pg": "^8.13.1",
     "pg-promise": "^11.10.2",
