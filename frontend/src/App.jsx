@@ -4,6 +4,7 @@ import DetailsEntry from "./Pages/DetailsEntry";
 import Dashboard from "./Pages/Dashboard";
 import Support from "./Pages/Support";
 import AuthPage from "./Pages/AuthPage";
+import LogoutHandler from "./services/logoutHandles";
 import "./App.css";
 
 import BlackAndWhite from "./Templates/BlackAndWhite/BlackAndWhite";
@@ -16,6 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/authpage" element={<AuthPage />} />
+        <Route path="/logout" element={<LogoutHandler/>} />
         <Route path="/details-entry" element={<DetailsEntry />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/support" element={<Support />} />

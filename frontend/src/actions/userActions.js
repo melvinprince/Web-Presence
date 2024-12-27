@@ -45,5 +45,12 @@ export const saveUserDetails = (details) => async (dispatch) => {
   }
 };
 
+// Actions/userActions.js
+
+export const clearUserDetails = () => ({
+  type: "CLEAR_USER_DETAILS",
+});
+
+
 
 
