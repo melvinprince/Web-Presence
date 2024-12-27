@@ -44,6 +44,7 @@ export default function Dashboard() {
         setNationality(data.nationality);
         setCurrentCountry(data.current_country);
         setImage(data.image_url); // Set the image URL when user data is fetched
+        localStorage.setItem('userDetails', JSON.stringify(data));
     };
 
     useEffect(() => {
