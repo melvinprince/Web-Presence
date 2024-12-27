@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
-import './template.css';
+import './blackandwhite.css';
 
-export default function Template() {
+export default function BlackAndWhite() {
     // Access userDetails directly from Redux state
     const userDetails = useSelector(state => state.userDetails);
 
     // You can directly render the details without local state
     return (
-        <div className="template-content">
+        <div className="black-and-white">
             <div className="first">
                 <img src={userDetails.image_url} alt="Profile Image" />
                 <div className="name">

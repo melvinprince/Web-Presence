@@ -1,24 +1,28 @@
-import {HashRouter as Router, Routes, Route} from 'react-router-dom';
-import Home from './Pages/Home';
-import DetailsEntry from './Pages/DetailsEntry';
-import Dashboard from './Pages/Dashboard';
-import Support from './Pages/Support';
-import './App.css';
-import AuthPage from './Pages/AuthPage';
-import Template from './Templates/Black And White Elegant Template/template'
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import DetailsEntry from "./Pages/DetailsEntry";
+import Dashboard from "./Pages/Dashboard";
+import Support from "./Pages/Support";
+import AuthPage from "./Pages/AuthPage";
+import "./App.css";
+
+import BlackAndWhite from "./Templates/BlackAndWhite/BlackAndWhite";
+import MinimalAndModern from "./Templates/MinimalAndModern/MinimalAndModern";
 
 
 export default function App() {
   return (
     <Router>
       <Routes>
+        {/* Static Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/authpage" element={<AuthPage />} />
         <Route path="/details-entry" element={<DetailsEntry />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/support" element={<Support />} />
-        <Route path="/template" element={<Template />} />
+        <Route path="/template/black-and-white" element={<BlackAndWhite />} />
+        <Route path="/template/minimal-and-modern" element={<MinimalAndModern />} />
       </Routes>
     </Router>
-  )
+  );
 }

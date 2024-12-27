@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
-import './template.css';
+import './modernandminimal.css';
 
-export default function Template() {
+export default function MinimalAndModern() {
     // Access userDetails directly from Redux state
     const userDetails = useSelector(state => state.userDetails);
+    console.log(userDetails);
+    
 
     // You can directly render the details without local state
     return (
-        <div className="template-content">
+        <div className="minimal-and-modern">
             <div className="first">
                 <img src={userDetails.image_url} alt="Profile Image" />
                 <div className="name">

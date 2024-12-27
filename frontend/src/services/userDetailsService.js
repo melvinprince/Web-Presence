@@ -52,15 +52,9 @@ const getUserDetails = async () => {
 const uploadUserImage = async (formData) => {
   try {
     console.log("triggered");
-    
-
-    const imageUrl = `${formData.protocol}://${formData.get("host")}/uploads/${
-    formData.file.filename}`;
-    console.log("imageUrl", imageUrl);
-    
 
     const token = localStorage.getItem("token"); // Get token from storage
-    console.log("formdata from service", formData.protocol);
+    console.log("formdata from service", formData);
     
     const { data } = await axios.post("/user/upload-image", formData, {
       headers: {

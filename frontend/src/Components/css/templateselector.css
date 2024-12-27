@@ -25,7 +25,7 @@
 .templates img {
     width: 100%;
     max-width: 220px;
-    height: auto;
+    height: 250px;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;

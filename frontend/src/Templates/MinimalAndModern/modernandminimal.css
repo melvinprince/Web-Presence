@@ -1,0 +1,114 @@
+/* template.css */
+.minimal-and-modern  {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.minimal-and-modern .first {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.minimal-and-modern .first img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid #0077ff;
+}
+
+.minimal-and-modern .name h1 {
+    font-size: 1.8rem;
+    color: #222;
+    margin: 0;
+}
+
+.minimal-and-modern .title h2 {
+    font-size: 1.2rem;
+    color: #0077ff;
+    margin: 5px 0 0;
+}
+
+.minimal-and-modern .about,
+.minimal-and-modern .skills,
+.minimal-and-modern .education,
+.minimal-and-modern .languages,
+.minimal-and-modern .experience,
+.minimal-and-modern .projects {
+    margin: 20px 0;
+}
+
+.minimal-and-modern .about p:first-child,
+.minimal-and-modern .skills p:first-child,
+.minimal-and-modern .education p:first-child,
+.minimal-and-modern .languages p:first-child,
+.minimal-and-modern .experience p:first-child,
+.minimal-and-modern .projects p:first-child {
+    font-size: 1.2rem;
+    color: #0077ff;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.minimal-and-modern .about p,
+.minimal-and-modern .skills p,
+.minimal-and-modern .education p,
+.minimal-and-modern .languages p,
+.minimal-and-modern .experience p,
+.minimal-and-modern .projects p {
+    line-height: 1.6;
+    margin: 5px 0;
+}
+
+.minimal-and-modern .sk-ed-lg {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.minimal-and-modern .skills, .minimal-and-modern .education, .minimal-and-modern .languages {
+    flex: 1;
+    background: #f7faff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.minimal-and-modern .skills p:last-child,
+.minimal-and-modern .education p:last-child,
+.minimal-and-modern .languages p:last-child {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.minimal-and-modern .experience, .minimal-and-modern .projects {
+    background: #f7faff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.minimal-and-modern .experience p:last-child,
+.minimal-and-modern .projects p:last-child {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .minimal-and-modern .sk-ed-lg {
+        flex-direction: column;
+    }
+
+    .minimal-and-modern .skills, .minimal-and-modern .education, .minimal-and-modern .languages {
+        margin-bottom: 20px;
+    }
+}

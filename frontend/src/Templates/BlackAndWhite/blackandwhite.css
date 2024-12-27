@@ -1,19 +1,6 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f0f0; /* Light grey background */
-    color: #333;
-    line-height: 1.6;
-}
 
 /* Template Container */
-.template-content {
+.black-and-white {
     max-width: 1000px;
     margin: 50px auto;
     padding: 40px;
@@ -23,14 +10,14 @@ body {
 }
 
 /* Header Section */
-.first {
+.black-and-white .first {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
 }
 
-.first img {
+.black-and-white .first img {
     width: 180px;
     height: 180px;
     border-radius: 50%;
@@ -39,7 +26,7 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.name h1 {
+.black-and-white .name h1 {
     font-size: 2.5rem;
     color: #000;
     font-weight: 700;
@@ -49,7 +36,7 @@ body {
     line-height: 1.1;
 }
 
-.title h2 {
+.black-and-white .title h2 {
     font-size: 1.4rem;
     color: #777;
     margin-left: 30px;
@@ -58,20 +45,20 @@ body {
 }
 
 /* About Section */
-.about {
+.black-and-white .about {
     margin-bottom: 40px;
     padding-bottom: 20px;
     border-bottom: 2px solid #e0e0e0; /* Soft separator line */
 }
 
-.about p {
+.black-and-white .about p {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 12px;
     line-height: 1.8;
 }
 
-.about p:first-child {
+.black-and-white .about p:first-child {
     font-weight: 600;
     color: #000;
     font-size: 1.4rem;
@@ -79,17 +66,17 @@ body {
 }
 
 /* Skills, Education, Languages Section */
-.sk-ed-lg {
+.black-and-white .sk-ed-lg {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
 }
 
-.sk-ed-lg div {
+.black-and-white .sk-ed-lg div {
     flex-basis: 30%;
 }
 
-.sk-ed-lg p {
+.black-and-white .sk-ed-lg p {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 12px;
@@ -98,57 +85,50 @@ body {
     letter-spacing: 0.5px;
 }
 
-.sk-ed-lg p:nth-child(2) {
+.black-and-white .sk-ed-lg p:nth-child(2) {
     color: #666;
     font-weight: 400;
     margin-bottom: 16px;
 }
 
 /* Experience and Projects Section */
-.experience, .projects {
+.black-and-white .experience, .black-and-white .projects {
     margin-bottom: 40px;
 }
 
-.experience p, .projects p {
+.black-and-white .experience p, .black-and-white .projects p {
     font-size: 1.3rem;
     color: #333;
     margin-bottom: 12px;
     line-height: 1.8;
 }
 
-.experience p:first-child, .projects p:first-child {
+.black-and-white .experience p:first-child, .black-and-white .projects p:first-child {
     font-weight: 600;
     color: #000;
     font-size: 1.5rem;
     text-transform: uppercase;
 }
 
-/* Footer (optional, depending on your design) */
-.footer {
-    text-align: center;
-    margin-top: 60px;
-    font-size: 1rem;
-    color: #888;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .first {
+    .black-and-white .first {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
-    .first img {
+    .black-and-white .first img {
         margin-bottom: 20px;
     }
 
-    .sk-ed-lg {
+    .black-and-white .sk-ed-lg {
         flex-direction: column;
         align-items: center;
     }
 
-    .sk-ed-lg div {
+    .black-and-white .sk-ed-lg div {
         flex-basis: 100%;
         margin-bottom: 20px;
     }
