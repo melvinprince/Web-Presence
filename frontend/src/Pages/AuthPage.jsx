@@ -24,7 +24,7 @@ export default function AuthPage() {
         const result = await loginUser(email, password);
         navigate("/dashboard");
         localStorage.setItem("token", result.token);
-        console.log(token);
+        // console.log(token);
         
       } catch (err) {
         setError(err.message );
@@ -41,9 +41,9 @@ export default function AuthPage() {
       try {
         const result = await registerUser(email, password);
         navigate("/dashboard");
-        console.log("Successfully Registered", result.userId);
+        // console.log("Successfully Registered", result.userId);
         localStorage.setItem("token", result.token);
-        console.log(token);
+        // console.log(token);
         
       } catch (err) {
         setError(err.message);

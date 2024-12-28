@@ -2,15 +2,15 @@ const userDetails = require("../models/userDetailsModel");
 
 // Create user details
 const createUserDetails = async (req, res) => {
-  console.log("triggered createUserDetails controller");
-  console.log("req.body", req.body);
-  console.log("req.userId", req.userId);
+  // console.log("triggered createUserDetails controller");
+  // console.log("req.body", req.body);
+  // console.log("req.userId", req.userId);
 
   const user_id = req.userId;
   const userData = req.body;
 
   try {
-    const result = await userDetails.createUserDetails(user_id, userData);
+    await userDetails.createUserDetails(user_id, userData);
     res.status(200).json({ message: "User details created successfully" });
   } catch (err) {
     console.error("Error creating user details:", err);
@@ -20,16 +20,16 @@ const createUserDetails = async (req, res) => {
 
 // Update user details
 const updateUserDetails = async (req, res) => {
-  console.log("triggered updateUserDetails controller");
-  console.log("req.body", req.body);
-  console.log("req.userId", req.userId);
+  // console.log("triggered updateUserDetails controller");
+  // console.log("req.body", req.body);
+  // console.log("req.userId", req.userId);
 
   const user_id = req.userId;
   const userData = req.body;
 
   try {
-    const result = await userDetails.updateUserDetails(user_id, userData);
-    console.log("table updated");
+    await userDetails.updateUserDetails(user_id, userData);
+    // console.log("table updated");
     res.status(200).json({ message: "User details updated successfully" });
   } catch (err) {
     console.error("Error updating user details:", err);
@@ -39,9 +39,9 @@ const updateUserDetails = async (req, res) => {
 
 // Fetch user details
 const fetchUserDetails = async (req, res) => {
-  console.log("triggered fetchUserDetails controller");
+  // console.log("triggered fetchUserDetails controller");
   const user_id = req.userId;
-  console.log("user_id", user_id);
+  // console.log("user_id", user_id);
 
   try {
     const result = await userDetails.fetchUserDetails(user_id);
@@ -58,11 +58,10 @@ const fetchUserDetails = async (req, res) => {
 
 // Upload user image
 const uploadUserImage = async (req, res) => {
-  console.log("triggered uploadUserImage controller");
-  console.log("req.file", req.file.filename);
-  console.log("req.file", req.file);
-  console.log("req.userId", req.userId);
-
+  // console.log("triggered uploadUserImage controller");
+  // console.log("req.file", req.file.filename);
+  // console.log("req.file", req.file);
+  // console.log("req.userId", req.userId);
   // const user_id = req.userId;
   const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
     req.file.filename

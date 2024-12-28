@@ -51,10 +51,10 @@ const getUserDetails = async () => {
 // New function to handle image upload
 const uploadUserImage = async (formData) => {
   try {
-    console.log("triggered");
+    // console.log("triggered");
 
     const token = localStorage.getItem("token"); // Get token from storage
-    console.log("formdata from service", formData);
+    // console.log("formdata from service", formData);
     
     const { data } = await axios.post("/user/upload-image", formData, {
       headers: {

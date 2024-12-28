@@ -2,9 +2,9 @@ const db = require("./db");
 
 class UserDetails {
   static async createUserDetails(user_id, userData) {
-    console.log("triggered createUserDetails models");
-    console.log("user_id", user_id);
-    console.log("userData", userData);
+    // console.log("triggered createUserDetails models");
+    // console.log("user_id", user_id);
+    // console.log("userData", userData);
 
     // Preprocess userData to set undefined or empty fields to null
     Object.keys(userData).forEach((key) => {
@@ -27,7 +27,7 @@ class UserDetails {
         `;
 
       const result = await db.one(query, [user_id, ...values]);
-      console.log("user details models/createUserDetails result", result);
+      // console.log("user details models/createUserDetails result", result);
       return result;
     } catch (err) {
       console.log("user details models/createUserDetails err", err);
@@ -36,7 +36,7 @@ class UserDetails {
   }
 
   static async updateUserDetails(user_id, userData) {
-    console.log("user details models/updateUserDetails", user_id, userData);
+    // console.log("user details models/updateUserDetails", user_id, userData);
 
     Object.keys(userData).forEach((key) => {
       if (!userData[key]) {
@@ -62,7 +62,7 @@ class UserDetails {
 
       if (existingUser) {
         const result = await db.one(query, [user_id, ...values]);
-        console.log("user details models/updateUserDetails result", result);
+        // console.log("user details models/updateUserDetails result", result);
         return result;
       }
     } catch (err) {
@@ -72,14 +72,14 @@ class UserDetails {
   }
 
   static async fetchUserDetails(user_id) {
-    console.log("user details models/fetchUserDetails", user_id);
+    // console.log("user details models/fetchUserDetails", user_id);
 
     try {
       const result = await db.oneOrNone(
         `SELECT * FROM user_details WHERE user_id = $1`,
         [user_id]
       );
-      console.log("user details models/fetchUserDetails result", result);
+      // console.log("user details models/fetchUserDetails result", result);
       return result;
     } catch (err) {
       console.log("user details models/fetchUserDetails err", err);

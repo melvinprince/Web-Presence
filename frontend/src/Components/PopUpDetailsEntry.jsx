@@ -67,11 +67,11 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
     // Handle file upload
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
-        console.log("File:", file);
+        // console.log("File:", file);
         
         const formData = new FormData();
         formData.append("image", file);
-        console.log(formData);
+        // console.log(formData);
 
         try {
             const response = await uploadUserImage(formData);

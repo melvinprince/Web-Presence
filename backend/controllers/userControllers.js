@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const createUser = async (req, res) => {
     // console.log("triggered createUser controller", req.body);
-    
     const userData = req.body;
 
     try {
@@ -68,7 +67,7 @@ const findUser = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "30d" }
     );
-    console.log("refreshToken", refreshToken);
+    // console.log("refreshToken", refreshToken);
     
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
@@ -114,7 +113,6 @@ const refreshToken = async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 };
-
 
 const logout = (req, res) => {
   res.clearCookie("refreshToken", {
