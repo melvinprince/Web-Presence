@@ -171,7 +171,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                             <input
                                 placeholder="College"
                                 value={edu.college_name || ""}
-                                onChange={(e) => updateEntry("education", index, "college", e.target.value)}
+                                onChange={(e) => updateEntry("education", index, "college_name", e.target.value)}
                             />
                             <input
                                 placeholder="Graduation Year"
@@ -198,6 +198,22 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     ))}
                     <button type="button" onClick={() => addEntry("education")}>Add Education</button>
 
+
+                    <h3>Skills</h3>
+                    <div className="form-group">
+                        {formData.skills.map((skill, index) => (
+                            <div key={index} className="nested-form-group">
+                                <input
+                                    placeholder="Skill"
+                                    value={skill || ""}
+                                    onChange={(e) => updateEntry("skills", index, e.target.value)}
+                                />
+                                <button type="button" onClick={() => removeEntry("skills", index)}>Remove</button>
+                            </div>
+                        ))}
+                        <button type="button" onClick={() => addEntry("skills")}>Add Skill</button>
+                    </div>
+                
                     {/* Projects Section */}
                     <h3>Projects</h3>
                     {formData.projects.map((project, index) => (
