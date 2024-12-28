@@ -20,12 +20,12 @@ export default function Dashboard() {
       nationality: "",
       current_country: "",
       image_url: "",
+      skills: "",
+      languages: "",
     },
     profileLinks: { linkedin: "", github: "", website: "" },
     education: [],
     projects: [],
-    skills: "",
-    languages: "",
     experience: [],
   });
 
@@ -132,10 +132,10 @@ export default function Dashboard() {
           </ul>
 
           <h3>Skills:</h3>
-          <h3>{userDetails.skills}</h3>
-      
+          <p>{userDetails.userData.skills}</p>
+    
           <h3>Languages: </h3>
-          <h3>{userDetails.languages}</h3>
+          <p>{userDetails.userData.languages}</p>
 
           <h3>Experience:</h3>
           <ul>

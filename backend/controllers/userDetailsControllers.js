@@ -53,7 +53,8 @@ const fetchUserDetails = async (req, res) => {
         nationality: user.nationality || "",
         current_country: user.current_country || "",
         image_url: user.image_url || "",
-        // ... other basic user details
+        skills: user.skills || "",
+        languages: user.languages || ""
       },
       profileLinks: {
         linkedin: socialLinks?.linkedin || "", // Use optional chaining
@@ -64,8 +65,7 @@ const fetchUserDetails = async (req, res) => {
       education: education || [],
       projects: projects || [],
       experience: experience || [],
-      skills: user.skills || "",
-      languages: user.languages || "",
+
     };
 
     res.status(200).json(formattedResponse);

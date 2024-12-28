@@ -15,6 +15,8 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         nationality: "",
         current_country: "",
         image_url: "",
+        skills: "",
+        languages: "",
     });
 
     useEffect(() => {
@@ -40,6 +42,8 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                 nationality: "",
                 current_country: "",
                 image_url: "",
+                skills: "",
+                languages: "",
             });
         }
     }, [userDetails]);
@@ -86,6 +90,8 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
             nationality: formData.nationality,
             current_country: formData.current_country,
             image_url: formData.image_url,
+            skills: formData.skills,
+            languages: formData.languages,
         };
 
         const formattedData = {
@@ -201,18 +207,22 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
 
                     <h3>Skills</h3>
                     <div className="form-group">
-                        {formData.skills.map((skill, index) => (
-                            <div key={index} className="nested-form-group">
-                                <input
-                                    placeholder="Skill"
-                                    value={skill || ""}
-                                    onChange={(e) => updateEntry("skills", index, e.target.value)}
-                                />
-                                <button type="button" onClick={() => removeEntry("skills", index)}>Remove</button>
-                            </div>
-                        ))}
-                        <button type="button" onClick={() => addEntry("skills")}>Add Skill</button>
+                        <input
+                            placeholder="Skills"
+                            value={formData.skills}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, skills: e.target.value }))}
+                        />
                     </div>
+
+                    <h3>Languages</h3>
+                    <div className="form-group">
+                        <input
+                            placeholder="Languages"
+                            value={formData.languages}
+                            onChange={(e) => setFormData((prev) => ({ ...prev, languages: e.target.value }))}
+                        />
+                    </div>
+
                 
                     {/* Projects Section */}
                     <h3>Projects</h3>
