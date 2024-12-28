@@ -1,12 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const cookieParser = require('cookie-parser');
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 // Serve static files (uploads)

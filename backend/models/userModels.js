@@ -32,6 +32,17 @@ class User {
             throw err;
         }
     }
+
+    static async findUserById(userId) {  // Add this method
+        try {
+            const result = await db.oneOrNone(
+                `SELECT * FROM users WHERE id = $1`, [userId]
+            );
+            return result;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
 module.exports = User;
