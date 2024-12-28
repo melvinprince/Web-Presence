@@ -87,25 +87,25 @@ class UserDetails {
     }
   }
 
-  static async updateUserImage(user_id, image_url) {
-    console.log("user details models/updateUserImage", user_id, image_url);
-
-    try {
-      const query = `
-        UPDATE user_details
-        SET image_url = $2
-        WHERE user_id = $1
-        RETURNING id, image_url
-      `;
-
-      const result = await db.one(query, [user_id, image_url]);
-      console.log("user details models/updateUserImage result", result);
-      return result;
-    } catch (err) {
-      console.log("user details models/updateUserImage err", err);
-      throw err;
-    }
-  }
+//   static async updateUserImage(user_id, image_url) {
+//     console.log("user details models/updateUserImage", user_id, image_url);
+// 
+//     try {
+//       const query = `
+//         UPDATE user_details
+//         SET image_url = $2
+//         WHERE user_id = $1
+//         RETURNING id, image_url
+//       `;
+// 
+//       const result = await db.one(query, [user_id, image_url]);
+//       console.log("user details models/updateUserImage result", result);
+//       return result;
+//     } catch (err) {
+//       console.log("user details models/updateUserImage err", err);
+//       throw err;
+//     }
+//   }
 }
 
 module.exports = UserDetails;
