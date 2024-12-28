@@ -8,113 +8,155 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "../actions/userActions";
 import "./css/dashboard.css";
 
-
 export default function Dashboard() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [title, setTitle] = useState("");
-    const [education, setEducation] = useState("");
-    const [projects, setProjects] = useState("");
-    const [skills, setSkills] = useState("");
-    const [languages, setLanguages] = useState("");
-    const [experience, setExperience] = useState("");
-    const [date_of_birth, setDateOfBirth] = useState("");
-    const [nationality, setNationality] = useState("");
-    const [current_country, setCurrentCountry] = useState("");
-    const [image, setImage] = useState(""); // State to store image URL
+  const [userDetails, setUserDetailsState] = useState({
+    userData: {
+      name: "",
+      email: "",
+      title: "",
+      date_of_birth: "",
+      nationality: "",
+      current_country: "",
+      image_url: "",
+    },
+    profileLinks: { linkedin: "", github: "", website: "" },
+    education: [],
+    projects: [],
+    skills: "",
+    languages: "",
+    experience: [],
+  });
 
-    const [idPresent, setIdPresent] = useState(false);
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [idPresent, setIdPresent] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-    const handleOpen = () => setIsPopupVisible(true);
-    const handleClose = () => setIsPopupVisible(false);
+  const handleOpen = () => setIsPopupVisible(true);
+  const handleClose = () => setIsPopupVisible(false);
 
-    const setData = (data) => {
+  const updateUserDataState = (data) => {
+    setUserDetailsState(data);
+    localStorage.setItem('userDetails', JSON.stringify(data));
+  };
 
-        setName(data.name);
-        setEmail(data.email);
-        setTitle(data.title);
-        setEducation(data.education);
-        setProjects(data.projects);
-        setSkills(data.skills);
-        setLanguages(data.languages);
-        setExperience(data.experience);
-        setDateOfBirth(data.date_of_birth);
-        setNationality(data.nationality);
-        setCurrentCountry(data.current_country);
-        setImage(data.image_url); // Set the image URL when user data is fetched
-        localStorage.setItem('userDetails', JSON.stringify(data));
-    };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getUserDetails();
-                if (data.user_id) {
-                    setIdPresent(true);
-                    dispatch(setUserDetails(data));
-                }
-                setData(data);
-            } catch (error) {
-                handleOpen();
-                console.error(error);
-            }
-        };
-        fetchData();
-    }, [dispatch]);
-
-    const handleUserDetailsSubmit = async (data) => {
-        setData(data);
-        try {
-            if (idPresent) {
-                await updateUserDetails(data);
-                dispatch(setUserDetails(data));
-                handleClose();
-            } else {
-                await addUserDetails(data); 
-                setIdPresent(true);
-                dispatch(setUserDetails(data));
-                handleClose();
-            }
-        } catch (error) {
-            console.error(error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUserDetails();
+        if (data.user_id) {
+          setIdPresent(true);
+          dispatch(setUserDetails(data));
         }
+        console.log("data after fetching in dashboard", data);
+        
+        updateUserDataState(data);
+      } catch (error) {
+        handleOpen();
+        console.error(error);
+      }
     };
+    fetchData();
+  }, []);
 
-    const userDetails = { name, email, title, education, projects, skills, languages, experience, date_of_birth, nationality, current_country, image };
+  const handleUserDetailsSubmit = async (formattedData) => {
+    updateUserDataState(formattedData); // Update state with the new format
+    try {
+      if (idPresent) {
+        await updateUserDetails(formattedData);
+        dispatch(setUserDetails(formattedData));
+      } else {
+        await addUserDetails(formattedData);
+        setIdPresent(true);
+        dispatch(setUserDetails(formattedData));
+      }
+      handleClose();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    return (
-        <div className="dashboard">
-            <Header />
-            <div className="dashboard-content">
-                <h1>Dashboard</h1>
-                <div className="details">
-                    {image && <img src={image} alt="User Profile" />}
-                    <h3>Name : {name}</h3>
-                    <h3>Email : {email}</h3>
-                    <h3>Title : {title}</h3>
-                    <h3>Education : {education}</h3>
-                    <h3>Projects : {projects}</h3>
-                    <h3>Skills : {skills}</h3>
-                    <h3>Languages : {languages}</h3>
-                    <h3>Experience : {experience}</h3>
-                    <h3>Date of Birth : {date_of_birth}</h3>
-                    <h3>Nationality : {nationality}</h3>
-                    <h3>Current Country: {current_country}</h3>
-                </div>
-                <button onClick={handleOpen}>Add/Edit Details</button>
-            </div>
-            <TemplateSelector userDetails={userDetails} />
-            {isPopupVisible && 
-                <PopUpDetailsEntry 
-                    handleClose={handleClose} 
-                    onSubmit={handleUserDetailsSubmit}
-                    userDetails={userDetails}        
-                />
-            }
-            <Footer />
+
+  return (
+    <div className="dashboard">
+      <Header />
+      <div className="dashboard-content">
+        <h1>Dashboard</h1>
+        <div className="details">
+          {userDetails.userData.image_url && <img src={userDetails.userData.image_url} alt="User Profile" />}
+          <h3>Name: {userDetails.userData.name}</h3>
+          <h3>Email: {userDetails.userData.email}</h3>
+          <h3>Title: {userDetails.userData.title}</h3>
+          {/* Add other userData fields as needed */}
+          <h3>Date of Birth: {userDetails.userData.date_of_birth}</h3>
+          <h3>Nationality: {userDetails.userData.nationality}</h3>
+          <h3>Current Country: {userDetails.userData.current_country}</h3>
+
+
+          <h3>Profile Links:</h3>
+          <ul>
+            {userDetails.profileLinks.linkedin && (
+              <li>
+                LinkedIn: <a href={userDetails.profileLinks.linkedin} target="_blank" rel="noreferrer">{userDetails.profileLinks.linkedin}</a>
+              </li>
+            )}
+            {userDetails.profileLinks.github && (
+              <li>
+                GitHub: <a href={userDetails.profileLinks.github} target="_blank" rel="noreferrer">{userDetails.profileLinks.github}</a>
+              </li>
+            )}
+            {userDetails.profileLinks.website && (
+              <li>
+                Website: <a href={userDetails.profileLinks.website} target="_blank" rel="noreferrer">{userDetails.profileLinks.website}</a>
+              </li>
+            )}
+          </ul>
+
+          <h3>Education:</h3>
+          <ul>
+            {userDetails.education.map((edu, index) => (
+              <li key={index}>
+                Graduated in {edu.graduation_year} with a {edu.degree} in {edu.major} from {edu.college_name} 
+              </li>
+            ))}
+          </ul>
+
+          <h3>Projects:</h3>
+          <ul>
+            {userDetails.projects.map((project, index) => (
+              <li key={index}>
+                {project.project_name} : {project.project_outcome}
+                {project.project_link && (<span> (<a href={project.project_link} target="_blank" rel="noreferrer">View Project</a>)</span>)}
+              </li>
+            ))}
+          </ul>
+
+          <h3>Skills:</h3>
+          <h3>{userDetails.skills}</h3>
+      
+          <h3>Languages: </h3>
+          <h3>{userDetails.languages}</h3>
+
+          <h3>Experience:</h3>
+          <ul>
+            {userDetails.experience.map((exp, index) => (
+              <li key={index}>
+                {exp.title} at {exp.company_name} ({exp.start_date} - {exp.end_date})
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+        <button onClick={handleOpen}>Add/Edit Details</button>
+      </div>
+      <TemplateSelector userDetails={userDetails} />
+      {isPopupVisible && (
+        <PopUpDetailsEntry
+          handleClose={handleClose}
+          onSubmit={handleUserDetailsSubmit}
+          userDetails={userDetails}
+        />
+      )}
+      <Footer />
+    </div>
+  );
 }

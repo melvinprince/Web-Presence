@@ -4,52 +4,34 @@ const userControllers = require("../controllers/userControllers");
 const userDetailsControllers = require("../controllers/userDetailsControllers");
 const authMiddleware = require("../middleware/authMiddleware");
 const upload = require("../middleware/fileUpload");
-// const jwt = require("jsonwebtoken");
 
-// Existing routes
-router.post(
-  "/register", 
-  userControllers.createUser
-);
+// User routes
+router.post("/register", userControllers.createUser);
+router.post("/login", userControllers.findUser);
+router.post("/logout", userControllers.logout);
+router.post("/refresh-token", userControllers.refreshToken);
 
-router.post(
-  "/login", 
-  userControllers.findUser
-);
+// User Details routes
+router.post("/add-details", authMiddleware, userDetailsControllers.createUserDetails);
+router.put("/update-details", authMiddleware, userDetailsControllers.updateUserDetails);
+router.get("/get-details", authMiddleware, userDetailsControllers.fetchUserDetails);
 
-router.post(
-  "/logout", 
-  userControllers.logout
-);
+// Education routes
+router.post("/education", authMiddleware, userDetailsControllers.addEducation);
+router.put("/education/", authMiddleware, userDetailsControllers.updateEducation);
 
-router.post(
-  "/add-details",
-  authMiddleware,
-  userDetailsControllers.createUserDetails
-);
+// Project routes
+router.post("/projects", authMiddleware, userDetailsControllers.addProject);
+router.put("/projects/", authMiddleware, userDetailsControllers.updateProject);
 
-router.put(
-  "/update-details",
-  authMiddleware,
-  userDetailsControllers.updateUserDetails
-);
+// Experience routes
+router.post("/experience", authMiddleware, userDetailsControllers.addExperience);
+router.put("/experience/", authMiddleware, userDetailsControllers.updateExperience);
 
-router.get(
-  "/get-details",
-  authMiddleware,
-  userDetailsControllers.fetchUserDetails
-);
+// Social Links route
+router.post("/social-links", authMiddleware, userDetailsControllers.addOrUpdateSocialLinks);
 
-router.post(
-  "/upload-image",
-  authMiddleware,
-  upload.single("image"),
-  userDetailsControllers.uploadUserImage
-);
-
-router.post(
-  "/refresh-token", 
-  userControllers.refreshToken
-);
+// Image Upload route
+router.post("/upload-image", authMiddleware, upload.single("image"), userDetailsControllers.uploadUserImage);
 
 module.exports = router;
