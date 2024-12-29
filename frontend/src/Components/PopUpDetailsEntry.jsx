@@ -1,6 +1,7 @@
 import "./css/popupdetailsentry.css";
 import { uploadUserImage } from "../services/userDetailsService";
 import { useState, useEffect } from "react";
+import { deleteEntry } from "../services/userDetailsService";
 
 export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails = {} }) {
     const [formData, setFormData] = useState({
@@ -75,7 +76,9 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         setFormData((prev) => ({ ...prev, [field]: updatedField }));
     };
 
-    const removeEntry = (field, index) => {
+    const removeEntry = async (field, index) => {
+        await deleteEntry(field, index); 
+        
         const updatedField = [...formData[field]];
         updatedField.splice(index, 1);
         setFormData((prev) => ({ ...prev, [field]: updatedField }));
