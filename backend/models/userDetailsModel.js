@@ -1,107 +1,14 @@
-// const db = require("./db");
-// 
-// class UserDetails {
-//   static async createUserDetails(user_id, userData) {
-//     // console.log("triggered createUserDetails models");
-//     // console.log("user_id", user_id);
-//     // console.log("userData", userData);
-// 
-//     // Preprocess userData to set undefined or empty fields to null
-//     Object.keys(userData).forEach((key) => {
-//       if (!userData[key]) {
-//         userData[key] = null; // Replace undefined or empty strings with null
-//       }
-//     });
-// 
-//     try {
-//       const columns = Object.keys(userData)
-//         .map((key) => key)
-//         .join(", ");
-//       const values = Object.values(userData);
-//       const placeholders = values.map((_, index) => `$${index + 2}`).join(", ");
-// 
-//       const query = `
-//             INSERT INTO user_details (user_id, ${columns}) 
-//             VALUES ($1, ${placeholders}) 
-//             RETURNING id
-//         `;
-// 
-//       const result = await db.one(query, [user_id, ...values]);
-//       // console.log("user details models/createUserDetails result", result);
-//       return result;
-//     } catch (err) {
-//       console.log("user details models/createUserDetails err", err);
-//       throw err;
-//     }
-//   }
-// 
-//   static async updateUserDetails(user_id, userData) {
-//     // console.log("user details models/updateUserDetails", user_id, userData);
-// 
-//     Object.keys(userData).forEach((key) => {
-//       if (!userData[key]) {
-//         userData[key] = null;
-//       }
-//     });
-// 
-//     try {
-//       const columns = Object.keys(userData);
-//       const values = Object.values(userData);
-//       const setClause = columns
-//         .map((column, index) => `${column} = $${index + 2}`)
-//         .join(", ");
-// 
-//       const query = `
-//         UPDATE user_details 
-//         SET ${setClause} 
-//         WHERE user_id = $1
-//         RETURNING id
-//       `;
-// 
-//       const existingUser = await this.fetchUserDetails(user_id);
-// 
-//       if (existingUser) {
-//         const result = await db.one(query, [user_id, ...values]);
-//         // console.log("user details models/updateUserDetails result", result);
-//         return result;
-//       }
-//     } catch (err) {
-//       console.log("user details models/updateUserDetails err", err);
-//       throw err;
-//     }
-//   }
-// 
-//   static async fetchUserDetails(user_id) {
-//     // console.log("user details models/fetchUserDetails", user_id);
-// 
-//     try {
-//       const result = await db.oneOrNone(
-//         `SELECT * FROM user_details WHERE user_id = $1`,
-//         [user_id]
-//       );
-//       // console.log("user details models/fetchUserDetails result", result);
-//       return result;
-//     } catch (err) {
-//       console.log("user details models/fetchUserDetails err", err);
-//       throw err;
-//     }
-//   }
-// 
-// }
-// 
-// module.exports = UserDetails;
-
-
 const db = require("./db");
 
 class UserDetails {
-  /**
-   * Create user details for a specific user.
-   * @param {number} user_id - The ID of the user.
-   * @param {object} userData - An object containing user details.
-   * @returns {Promise<object>} - The ID of the newly inserted user details.
-   */
-  static async createUserDetails(user_id, userData) {
+  static async createOrUpdateUserDetails(user_id, userData) {
+    console.log(
+      "userDetailsModel.js - createOrUpdateUserDetails - user_id",
+      user_id,
+      "userData",
+      userData
+    );
+
     // Preprocess userData to set undefined or empty fields to null
     Object.keys(userData).forEach((key) => {
       if (!userData[key]) {
@@ -109,297 +16,364 @@ class UserDetails {
       }
     });
 
-    // Ensure skills and languages are stored as arrays if provided
-    if (userData.skills && !Array.isArray(userData.skills)) {
-      userData.skills = userData.skills.split(",").map((item) => item.trim());
-    }
-    if (userData.languages && !Array.isArray(userData.languages)) {
-      userData.languages = userData.languages
-        .split(",")
-        .map((item) => item.trim());
-    }
-
     try {
-      const columns = Object.keys(userData)
-        .map((key) => key)
-        .join(", ");
-      const values = Object.values(userData);
-      const placeholders = values.map((_, index) => `$${index + 2}`).join(", ");
+      // Check if user details already exist
+      const existingUser = await this.fetchUserDetails(user_id);
+      console.log(
+        "userDetailsModel.js - createOrUpdateUserDetails - existingUser",
+        existingUser
+      );
 
-      const query = `
-        INSERT INTO user_details (user_id, ${columns}) 
-        VALUES ($1, ${placeholders}) 
-        RETURNING id
-      `;
+      if (existingUser) {
+        console.log("User details found, updating...");
+        const columns = Object.keys(userData);
+        const values = Object.values(userData);
+        const setClause = columns
+          .map((column, index) => `${column} = $${index + 2}`)
+          .join(", ");
 
-      const result = await db.one(query, [user_id, ...values]);
-      return result;
-    } catch (err) {
-      console.error("Error in createUserDetails:", err);
-      throw err;
-    }
-  }
-
-  /**
-   * Update user details for a specific user.
-   * @param {number} user_id - The ID of the user.
-   * @param {object} userData - An object containing updated user details.
-   * @returns {Promise<object>} - The ID of the updated user details.
-   */
-  static async updateUserDetails(user_id, userData) {
-    Object.keys(userData).forEach((key) => {
-      if (!userData[key]) {
-        userData[key] = null;
-      }
-    });
-
-    // Ensure skills and languages are stored as arrays if provided
-    if (userData.skills && !Array.isArray(userData.skills)) {
-      userData.skills = userData.skills.split(",").map((item) => item.trim());
-    }
-    if (userData.languages && !Array.isArray(userData.languages)) {
-      userData.languages = userData.languages
-        .split(",")
-        .map((item) => item.trim());
-    }
-
-    try {
-      const columns = Object.keys(userData);
-      const values = Object.values(userData);
-      const setClause = columns
-        .map((column, index) => `${column} = $${index + 2}`)
-        .join(", ");
-
-      const query = `
+        const updateQuery = `
         UPDATE user_details 
         SET ${setClause} 
         WHERE user_id = $1
         RETURNING id
       `;
+        const result = await db.one(updateQuery, [user_id, ...values]);
+        console.log("User details updated:", result);
+        return result;
+      } else {
+        console.log("User details not found, creating...");
+        const columns = Object.keys(userData).join(", ");
+        const values = Object.values(userData);
+        const placeholders = values
+          .map((_, index) => `$${index + 2}`)
+          .join(", ");
 
-      const existingUser = await this.fetchUserDetails(user_id);
-
-      if (existingUser) {
-        const result = await db.one(query, [user_id, ...values]);
+        const insertQuery = `
+        INSERT INTO user_details (user_id, ${columns}) 
+        VALUES ($1, ${placeholders}) 
+        RETURNING id
+      `;
+        const result = await db.one(insertQuery, [user_id, ...values]);
+        console.log("User details created:", result);
         return result;
       }
     } catch (err) {
-      console.error("Error in updateUserDetails:", err);
+      console.error("Error in createOrUpdateUserDetails:", err);
       throw err;
     }
   }
 
-  /**
-   * Fetch user details for a specific user.
-   * @param {number} user_id - The ID of the user.
-   * @returns {Promise<object>} - The user details.
-   */
-  static async fetchUserDetails(user_id) {
-    try {
-      const result = await db.oneOrNone(
-        `SELECT * FROM user_details WHERE user_id = $1`,
-        [user_id]
-      );
-      return result;
-    } catch (err) {
-      console.error("Error in fetchUserDetails:", err);
-      throw err;
+  static async addOrUpdateEducation(user_id, educationData) {
+    console.log("Received educationData:", educationData);
+
+    //Use a set to efficiently track existing IDs
+    const existingIds = new Set();
+    const existingEducation = await db.any(
+      `SELECT id FROM education WHERE user_id = $1`,
+      [user_id]
+    );
+    console.log("Existing education:", existingEducation);
+    
+    existingEducation.forEach((item) => existingIds.add(item.id));
+
+    for (const edu of educationData) {
+      console.log("Processing education entry:", edu);
+
+      if (edu.id && existingIds.has(edu.id)) {
+        // Update existing entry (if ID is present and already exists)
+        try {
+          const updatedEducation = await db.one(
+            `UPDATE education SET college_name = $/college_name/, graduation_year = $/graduation_year/, graduation_month = $/graduation_month/, degree = $/degree/, major = $/major/ WHERE id = $/id/ RETURNING *`,
+            edu
+          );
+          console.log("Updated education:", updatedEducation);
+        } catch (err) {
+          console.error("Error updating education:", err);
+          throw err;
+        }
+      } else {
+        // Insert new entry (if ID is not present or does not exist)
+        try {
+          const newEducation = await db.one(
+            `INSERT INTO education (user_id, college_name, graduation_year, graduation_month, degree, major) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [
+              user_id,
+              edu.college_name,
+              edu.graduation_year,
+              edu.graduation_month,
+              edu.degree,
+              edu.major,
+            ]
+          );
+          console.log("Inserted new education:", newEducation);
+        } catch (err) {
+          console.error("Error inserting education:", err);
+          throw err;
+        }
+      }
     }
   }
 
-    static async addEducation(user_id, educationData) {
-    const query = `
-      INSERT INTO education (user_id, college_name, graduation_year, graduation_month, degree, major)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING id
-    `;
-    const values = [
-      user_id,
-      educationData.college_name,
-      educationData.graduation_year,
-      educationData.graduation_month,
-      educationData.degree,
-      educationData.major,
-    ];
+  static async addOrUpdateProject(user_id, projectData) {
+    console.log("Received projectData:", projectData);
 
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in addEducation:", err);
-      throw err;
+    //Use a set to efficiently track existing IDs
+    const existingIds = new Set();
+    const existingProjects = await db.any(
+      `SELECT id FROM projects WHERE user_id = $1`,
+      [user_id]
+    );
+    existingProjects.forEach((item) => existingIds.add(item.id));
+
+    for (const project of projectData) {
+      console.log("Processing project entry:", project);
+      if (project.id && existingIds.has(project.id)) {
+        // Update existing entry (if ID is present and already exists)
+        try {
+          const updatedProject = await db.one(
+            `UPDATE projects SET project_name = $/project_name/, project_outcome = $/project_outcome/, project_link = $/project_link/ WHERE id = $/id/ RETURNING *`,
+            project
+          );
+          console.log("Updated project:", updatedProject);
+        } catch (err) {
+          console.error("Error updating project:", err);
+          throw err;
+        }
+      } else {
+        // Insert new entry (if ID is not present or does not exist)
+        try {
+          const newProject = await db.one(
+            `INSERT INTO projects (user_id, project_name, project_outcome, project_link) VALUES ($1, $2, $3, $4) RETURNING *`,
+            [
+              user_id,
+              project.project_name,
+              project.project_outcome,
+              project.project_link,
+            ]
+          );
+          console.log("Inserted new project:", newProject);
+        } catch (err) {
+          console.error("Error inserting project:", err);
+          throw err;
+        }
+      }
     }
   }
 
-  static async fetchEducation(user_id) {
-    const query = `SELECT * FROM education WHERE user_id = $1`;
+  static async addOrUpdateExperience(user_id, experienceData) {
+    console.log("Received experienceData:", experienceData);
 
-    try {
-      const result = await db.any(query, [user_id]);
-      return result;
-    } catch (err) {
-      console.error("Error in fetchEducation:", err);
-      throw err;
+    //Use a set to efficiently track existing IDs
+    const existingIds = new Set();
+    const existingExperiences = await db.any(
+      `SELECT id FROM experience WHERE user_id = $1`,
+      [user_id]
+    );
+    console.log("Existing experiences:", existingExperiences);
+    
+    existingExperiences.forEach((item) => existingIds.add(item.id));
+
+    for (const experience of experienceData) {
+      console.log("Processing experience entry:", experience);
+      if (experience.id && existingIds.has(experience.id)) {
+        // Update existing entry (if ID is present and already exists)
+        try {
+          const updatedExperience = await db.one(
+            `UPDATE experience SET company_name = $/company_name/, title = $/title/, start_date = $/start_date/, end_date = $/end_date/ WHERE id = $/id/ RETURNING *`,
+            experience
+          );
+          console.log("Updated experience:", updatedExperience);
+        } catch (err) {
+          console.error("Error updating experience:", err);
+          throw err;
+        }
+      } else {
+        // Insert new entry (if ID is not present or does not exist)
+        try {
+          const newExperience = await db.one(
+            `INSERT INTO experience (user_id, company_name, title, start_date, end_date) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+            [
+              user_id,
+              experience.company_name,
+              experience.title,
+              experience.start_date,
+              experience.end_date,
+            ]
+          );
+          console.log("Inserted new experience:", newExperience);
+        } catch (err) {
+          console.error("Error inserting experience:", err);
+          throw err;
+        }
+      }
     }
   }
 
-  static async updateEducation(id, educationData) {
-    const query = `
-      UPDATE education
-      SET college_name = $1, graduation_year = $2, graduation_month = $3, degree = $4, major = $5
-      WHERE id = $6
-      RETURNING id
-    `;
-    const values = [
-      educationData.college_name,
-      educationData.graduation_year,
-      educationData.graduation_month,
-      educationData.degree,
-      educationData.major,
-      id,
-    ];
+  // ... rest of your UserDetails class ...
 
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in updateEducation:", err);
-      throw err;
-    }
-  }
+  //   static async addOrUpdateEducation(user_id, educationData) {
+  //     console.log("Received educationData:", educationData); // Log the input data
+  //
+  //     for (const edu of educationData) {
+  //       console.log("Processing education entry:", edu); // Log each entry being processed
+  //
+  //       try {
+  //         if (edu.id) {
+  //           console.log("Updating education with ID:", edu.id); // Log the update operation
+  //
+  //           const updatedEducation = await db.one(
+  //             `
+  //           INSERT INTO education (id, user_id, college_name, graduation_year, graduation_month, degree, major)
+  //           VALUES ($/id/, $/user_id/, $/college_name/, $/graduation_year/, $/graduation_month/, $/degree/, $/major/)
+  //           ON CONFLICT (id)
+  //           DO UPDATE SET
+  //               college_name = EXCLUDED.college_name,
+  //               graduation_year = EXCLUDED.graduation_year,
+  //               graduation_month = EXCLUDED.graduation_month,
+  //               degree = EXCLUDED.degree,
+  //               major = EXCLUDED.major
+  //           RETURNING id;
+  //
+  //           `,
+  //             { ...edu, user_id }
+  //           );
+  //
+  //           console.log("Updated education:", updatedEducation); // Confirm successful update
+  //
+  //           if (!updatedEducation) {
+  //             throw new Error(`Education update failed for id ${edu.id}`);
+  //           }
+  //         } else {
+  //           console.log("Inserting new education entry:", edu); // Log the insert operation
+  //
+  //           await db.none(
+  //             `
+  //           INSERT INTO education (user_id, college_name, graduation_year, graduation_month, degree, major)
+  //           VALUES ($/user_id/, $/college_name/, $/graduation_year/, $/graduation_month/, $/degree/, $/major/)
+  //           `,
+  //             { ...edu, user_id }
+  //           );
+  //         }
+  //       } catch (err) {
+  //         console.error("Error in addOrUpdateEducation:", err); // Log any errors
+  //         throw err;
+  //       }
+  //     }
+  //   }
 
-  /**
-   * Projects Methods
-   */
-  static async addProject(user_id, projectData) {
-    const query = `
-      INSERT INTO projects (user_id, project_name, project_outcome, project_link)
-      VALUES ($1, $2, $3, $4)
-      RETURNING id
-    `;
-    const values = [
-      user_id,
-      projectData.project_name,
-      projectData.project_outcome,
-      projectData.project_link,
-    ];
+  //   static async addOrUpdateProject(user_id, projectData) {
+  //     console.log("Received projectData:", projectData); // Log the input data
+  //
+  //     for (const project of projectData) {
+  //       console.log("Processing project entry:", project); // Log each entry being processed
+  //
+  //       try {
+  //         if (project.id) {
+  //           console.log("Updating project with ID:", project.id); // Log the update operation
+  //
+  //           const updatedProject = await db.one(
+  //             `
+  //           INSERT INTO projects (id, user_id, project_name, project_outcome, project_link)
+  //           VALUES ($/id/, $/user_id/, $/project_name/, $/project_outcome/, $/project_link/)
+  //           ON CONFLICT (id)
+  //           DO UPDATE SET
+  //           project_name = EXCLUDED.project_name,
+  //           project_link = EXCLUDED.project_link,
+  //           project_outcome = EXCLUDED.project_outcome
+  //           RETURNING id;
+  //           `,
+  //             { ...project, user_id }
+  //           );
+  //
+  //           console.log("Updated project:", updatedProject); // Confirm successful update
+  //
+  //           if (!updatedProject) {
+  //             throw new Error(`Project update failed for id ${project.id}`);
+  //           }
+  //         } else {
+  //           console.log("Inserting new project entry:", project); // Log the insert operation
+  //
+  //           await db.none(
+  //             `
+  //           INSERT INTO projects (user_id, project_name, project_outcome, project_link)
+  //           VALUES ($/user_id/, $/project_name/, $/project_outcome/, $/project_link/)
+  //           `,
+  //             { ...project, user_id }
+  //           );
+  //         }
+  //       } catch (err) {
+  //         console.error("Error in addOrUpdateProject:", err); // Log any errors
+  //         throw err;
+  //       }
+  //     }
+  //   }
+  //
+  //   static async addOrUpdateExperience(user_id, experienceData) {
+  //     console.log("Received experienceData:", experienceData); // Log the input data
+  //
+  //     for (const experience of experienceData) {
+  //       console.log("Processing experience entry:", experience); // Log each entry being processed
+  //
+  //       try {
+  //         if (experience.id) {
+  //           console.log("Updating experience with ID:", experience.id); // Log the update operation
+  //
+  //           const updatedExperience = await db.one(
+  //             `
+  //           INSERT INTO experience (id, user_id, company_name, title, start_date, end_date)
+  //           VALUES ($/id/, $/user_id/, $/company_name/, $/title/, $/start_date/, $/end_date/)
+  //           ON CONFLICT (id)
+  //           DO UPDATE SET
+  //               company_name = EXCLUDED.company_name,
+  //               title = EXCLUDED.title,
+  //               start_date = EXCLUDED.start_date,
+  //               end_date = EXCLUDED.end_date
+  //           RETURNING id;
+  //
+  //           `,
+  //             { ...experience, user_id }
+  //           );
+  //
+  //           console.log("Updated experience:", updatedExperience); // Confirm successful update
+  //
+  //           if (!updatedExperience) {
+  //             throw new Error(`Experience update failed for id ${experience.id}`);
+  //           }
+  //         } else {
+  //           console.log("Inserting new experience entry:", experience); // Log the insert operation
+  //
+  //           await db.none(
+  //             `
+  //           INSERT INTO experience (user_id, company_name, title, start_date, end_date)
+  //           VALUES ($/user_id/, $/company_name/, $/title/, $/start_date/, $/end_date/)
+  //           `,
+  //             { ...experience, user_id }
+  //           );
+  //         }
+  //       } catch (err) {
+  //         console.error("Error in addOrUpdateExperience:", err); // Log any errors
+  //         throw err;
+  //       }
+  //     }
+  //   }
 
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in addProject:", err);
-      throw err;
-    }
-  }
-
-  static async fetchProjects(user_id) {
-    const query = `SELECT * FROM projects WHERE user_id = $1`;
-
-    try {
-      const result = await db.any(query, [user_id]);
-      return result;
-    } catch (err) {
-      console.error("Error in fetchProjects:", err);
-      throw err;
-    }
-  }
-
-  static async updateProject(id, projectData) {
-    const query = `
-      UPDATE projects
-      SET project_name = $1, project_outcome = $2, project_link = $3
-      WHERE id = $4
-      RETURNING id
-    `;
-    const values = [
-      projectData.project_name,
-      projectData.project_outcome,
-      projectData.project_link,
-      id,
-    ];
-
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in updateProject:", err);
-      throw err;
-    }
-  }
-
-  /**
-   * Experience Methods
-   */
-  static async addExperience(user_id, experienceData) {
-    const query = `
-      INSERT INTO experience (user_id, company_name, title, start_date, end_date)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING id
-    `;
-    const values = [
-      user_id,
-      experienceData.company_name,
-      experienceData.title,
-      experienceData.start_date,
-      experienceData.end_date,
-    ];
-
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in addExperience:", err);
-      throw err;
-    }
-  }
-
-  static async fetchExperience(user_id) {
-    const query = `SELECT * FROM experience WHERE user_id = $1`;
-
-    try {
-      const result = await db.any(query, [user_id]);
-      return result;
-    } catch (err) {
-      console.error("Error in fetchExperience:", err);
-      throw err;
-    }
-  }
-
-  static async updateExperience(id, experienceData) {
-    const query = `
-      UPDATE experience
-      SET company_name = $1, title = $2, start_date = $3, end_date = $4
-      WHERE id = $5
-      RETURNING id
-    `;
-    const values = [
-      experienceData.company_name,
-      experienceData.title,
-      experienceData.start_date,
-      experienceData.end_date,
-      id,
-    ];
-
-    try {
-      const result = await db.one(query, values);
-      return result;
-    } catch (err) {
-      console.error("Error in updateExperience:", err);
-      throw err;
-    }
-  }
-
-  /**
-   * Social Links Methods
-   */
   static async addOrUpdateSocialLinks(user_id, socialLinks) {
+    console.log(
+      "userDetailsModel.js - addOrUpdateSocialLinks - user_id",
+      user_id,
+      "socialLinks",
+      socialLinks
+    );
     const existingLinks = await db.oneOrNone(
       `SELECT id FROM social_links WHERE user_id = $1`,
       [user_id]
     );
+    console.log("Existing social links:", existingLinks);
 
     if (existingLinks) {
+      console.log("Social links found, updating...");
+
       const query = `
         UPDATE social_links
         SET linkedin = $1, github = $2, website = $3
@@ -421,6 +395,9 @@ class UserDetails {
         throw err;
       }
     } else {
+      // If no existing links, insert new ones
+      console.log("Social links not found, inserting...");
+
       const query = `
         INSERT INTO social_links (user_id, linkedin, github, website)
         VALUES ($1, $2, $3, $4)
@@ -443,7 +420,61 @@ class UserDetails {
     }
   }
 
+  static async fetchUserDetails(user_id) {
+    console.log("userDetailsModel.js - fetchUserDetails - user_id", user_id);
+    try {
+      const result = await db.oneOrNone(
+        `SELECT * FROM user_details WHERE user_id = $1`,
+        [user_id]
+      );
+      return result;
+    } catch (err) {
+      console.error("Error in fetchUserDetails:", err);
+      throw err;
+    }
+  }
+
+  static async fetchEducation(user_id) {
+    console.log("userDetailsModel.js - fetchEducation - user_id", user_id);
+    const query = `SELECT * FROM education WHERE user_id = $1`;
+
+    try {
+      const result = await db.any(query, [user_id]);
+      return result;
+    } catch (err) {
+      console.error("Error in fetchEducation:", err);
+      throw err;
+    }
+  }
+
+  static async fetchProjects(user_id) {
+    console.log("userDetailsModel.js - fetchProjects - user_id", user_id);
+    const query = `SELECT * FROM projects WHERE user_id = $1`;
+
+    try {
+      const result = await db.any(query, [user_id]);
+      return result;
+    } catch (err) {
+      console.error("Error in fetchProjects:", err);
+      throw err;
+    }
+  }
+
+  static async fetchExperience(user_id) {
+    console.log("userDetailsModel.js - fetchExperience - user_id", user_id);
+    const query = `SELECT * FROM experience WHERE user_id = $1`;
+
+    try {
+      const result = await db.any(query, [user_id]);
+      return result;
+    } catch (err) {
+      console.error("Error in fetchExperience:", err);
+      throw err;
+    }
+  }
+
   static async fetchSocialLinks(user_id) {
+    console.log("userDetailsModel.js - fetchSocialLinks - user_id", user_id);
     const query = `SELECT * FROM social_links WHERE user_id = $1`;
 
     try {

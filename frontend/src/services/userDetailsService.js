@@ -1,7 +1,8 @@
 import axios from "./axiosInstance";
 
-const addUserDetails = async (dataToSubmit) => {
+const addOrUpdateUserDetails = async (dataToSubmit) => {
   try {
+    console.log("userDetailsService.js - dataToSubmit", dataToSubmit);
     const token = localStorage.getItem("token"); // Get token from storage
     const { data } = await axios.post("/user/add-details", dataToSubmit, {
       headers: {
@@ -12,22 +13,6 @@ const addUserDetails = async (dataToSubmit) => {
   } catch (err) {
     throw new Error(
       err.response?.data?.message || "Failed to add user details."
-    );
-  }
-};
-
-const updateUserDetails = async (dataToSubmit) => {
-  try {
-    const token = localStorage.getItem("token"); // Get token from storage
-    const { data } = await axios.put("/user/update-details", dataToSubmit, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Attach token to request
-      },
-    });
-    return data;
-  } catch (err) {
-    throw new Error(
-      err.response?.data?.message || "Failed to update user details."
     );
   }
 };
@@ -51,7 +36,7 @@ const getUserDetails = async () => {
 // New function to handle image upload
 const uploadUserImage = async (formData) => {
   try {
-    // console.log("triggered");
+    console.log("triggered uploadUserImage from userDetailsService.js");
 
     const token = localStorage.getItem("token"); // Get token from storage
     // console.log("formdata from service", formData);
@@ -68,4 +53,4 @@ const uploadUserImage = async (formData) => {
   }
 };
 
-export { addUserDetails, getUserDetails, updateUserDetails, uploadUserImage };
+export { addOrUpdateUserDetails, getUserDetails, uploadUserImage };

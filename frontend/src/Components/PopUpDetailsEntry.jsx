@@ -7,6 +7,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         name: "",
         email: "",
         title: "",
+        about: "",
         profileLinks: { linkedin: "", github: "", website: "" },
         education: [],
         projects: [],
@@ -34,6 +35,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                 name: "",
                 email: "",
                 title: "",
+                about: "",
                 profileLinks: { linkedin: "", github: "", website: "" },
                 education: [],
                 projects: [],
@@ -86,6 +88,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
             name: formData.name,
             email: formData.email,
             title: formData.title,
+            about: formData.about,
             date_of_birth: formData.date_of_birth,
             nationality: formData.nationality,
             current_country: formData.current_country,
@@ -94,15 +97,19 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
             languages: formData.languages,
         };
 
-        const formattedData = {
-            userData,
-            profileLinks: formData.profileLinks,
-            education: formData.education,
-            projects: formData.projects,
-            experience: formData.experience,
-        };
+        const profileLinks = formData.profileLinks;
+        const education = formData.education;
+        const projects = formData.projects;
+        const experience = formData.experience.map((exp) => ({
+            id: exp.id || null,
+            company_name: exp.company_name,
+            title: exp.title,
+            start_date: exp.start_date,
+            end_date: exp.end_date || " Present ", //Ensure end_date key always exists
+        }));
 
-        onSubmit(formattedData);
+
+        onSubmit(userData, profileLinks, education, projects, experience);
     };
 
     const handleImageUpload = async (e) => {
@@ -111,6 +118,8 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         imageData.append("image", file);
 
         try {
+            console.log("triggered image upload");
+            
             const response = await uploadUserImage(imageData);
             if (response?.imageUrl) {
                 setFormData((prevState) => ({
@@ -132,15 +141,19 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     {/* Basic Details */}
                     <div className="form-group">
                         <label>Name</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} />
+                        <input type="email" name="email" value={formData.email} onChange={handleChange} required/>
                     </div>
                     <div className="form-group">
                         <label>Title</label>
-                        <input type="text" name="title" value={formData.title} onChange={handleChange} />
+                        <input type="text" name="title" value={formData.title} onChange={handleChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <label>About</label>
+                        <textarea name="about" value={formData.about} onChange={handleChange} />
                     </div>
                     <div className="form-group">
                         <label>Date of Birth</label>
@@ -175,7 +188,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     {formData.education.map((edu, index) => (
                         <div key={index} className="nested-form-group">
                             <input
-                                placeholder="College"
+                                placeholder="College or Institution"
                                 value={edu.college_name || ""}
                                 onChange={(e) => updateEntry("education", index, "college_name", e.target.value)}
                             />
@@ -190,12 +203,12 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 onChange={(e) => updateEntry("education", index, "graduation_month", e.target.value)}
                             />
                             <input
-                                placeholder="Degree"
+                                placeholder="Degree - B.Tech, B.E., etc."
                                 value={edu.degree || ""}
                                 onChange={(e) => updateEntry("education", index, "degree", e.target.value)}
                             />
                             <input
-                                placeholder="Major"
+                                placeholder="Major or Stream"
                                 value={edu.major || ""}
                                 onChange={(e) => updateEntry("education", index, "major", e.target.value)}
                             />
@@ -208,7 +221,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     <h3>Skills</h3>
                     <div className="form-group">
                         <input
-                            placeholder="Skills"
+                            placeholder="Skills (comma separated)"
                             value={formData.skills}
                             onChange={(e) => setFormData((prev) => ({ ...prev, skills: e.target.value }))}
                         />
@@ -217,7 +230,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     <h3>Languages</h3>
                     <div className="form-group">
                         <input
-                            placeholder="Languages"
+                            placeholder="Languages (comma separated)"
                             value={formData.languages}
                             onChange={(e) => setFormData((prev) => ({ ...prev, languages: e.target.value }))}
                         />
@@ -232,14 +245,16 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 placeholder="Project Name"
                                 value={project.project_name || ""}
                                 onChange={(e) => updateEntry("projects", index, "project_name", e.target.value)}
+                                required
                             />
                             <input
                                 placeholder="Outcome"
                                 value={project.project_outcome || ""}
                                 onChange={(e) => updateEntry("projects", index, "project_outcome", e.target.value)}
+                                required
                             />
                             <input
-                                placeholder="Link"
+                                placeholder="Link (Optional)"
                                 value={project.project_link || ""}
                                 onChange={(e) => updateEntry("projects", index, "project_link", e.target.value)}
                             />
@@ -256,22 +271,25 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 placeholder="Company"
                                 value={exp.company_name || ""}
                                 onChange={(e) => updateEntry("experience", index, "company_name", e.target.value)}
+                                required
                             />
                             <input
                                 placeholder="Title"
                                 value={exp.title || ""}
                                 onChange={(e) => updateEntry("experience", index, "title", e.target.value)}
+                                required
                             />
                             <input
                                 placeholder="Start Date"
                                 type="date"
                                 value={exp.start_date || ""}
                                 onChange={(e) => updateEntry("experience", index, "start_date", e.target.value)}
+                                required
                             />
                             <input
-                                placeholder="End Date"
+                                placeholder="End Date (Optional)" 
                                 type="date"
-                                value={exp.end_date || ""}
+                                value={exp.end_date || ""} //Corrected line:  Use exp.end_date || ""
                                 onChange={(e) => updateEntry("experience", index, "end_date", e.target.value)}
                             />
                             <button type="button" onClick={() => removeEntry("experience", index)}>Remove</button>
@@ -281,7 +299,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
 
                     {/* Image Upload */}
                     <div className="form-group">
-                        <label>Profile Image</label>
+                        <label>Profile Image Upload (Optional)</label>
                         <input type="file" onChange={handleImageUpload} />
                         {formData.image_url && <img src={formData.image_url} alt="Profile Preview" />}
                     </div>

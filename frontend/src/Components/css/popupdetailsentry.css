@@ -12,6 +12,11 @@
   z-index: 1000;
 }
 
+.popup-details-entry img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
 /* Styles for Popup Content */
 .popup-details-entry-content {
   width: 90%;

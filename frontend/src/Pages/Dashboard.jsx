@@ -2,7 +2,7 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import PopUpDetailsEntry from "../Components/PopUpDetailsEntry";
 import { useState, useEffect } from "react";
-import { addUserDetails, getUserDetails, updateUserDetails } from "../services/userDetailsService";
+import { addOrUpdateUserDetails, getUserDetails } from "../services/userDetailsService";
 import TemplateSelector from "../Components/TemplateSelector";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../actions/userActions";
@@ -16,6 +16,7 @@ export default function Dashboard() {
       name: "",
       email: "",
       title: "",
+      about: "",
       date_of_birth: "",
       nationality: "",
       current_country: "",
@@ -59,17 +60,22 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const handleUserDetailsSubmit = async (formattedData) => {
+  const handleUserDetailsSubmit = async (userData, profileLinks, education, projects, experience) => {
+    // console.log("data from dasahboard", userData, profileLinks, education, projects, experience);
+    
+    const formattedData = {
+      userData,
+      profileLinks,
+      education,
+      projects,
+      experience,
+    };
+    console.log("formattedData", formattedData);
+    
     updateUserDataState(formattedData); // Update state with the new format
     try {
-      if (idPresent) {
-        await updateUserDetails(formattedData);
-        dispatch(setUserDetails(formattedData));
-      } else {
-        await addUserDetails(formattedData);
-        setIdPresent(true);
-        dispatch(setUserDetails(formattedData));
-      }
+      await addOrUpdateUserDetails(formattedData);
+      dispatch(setUserDetails(formattedData));
       handleClose();
     } catch (error) {
       console.error(error);
@@ -87,6 +93,7 @@ export default function Dashboard() {
           <h3>Name: {userDetails.userData.name}</h3>
           <h3>Email: {userDetails.userData.email}</h3>
           <h3>Title: {userDetails.userData.title}</h3>
+          <h3>About: {userDetails.userData.about}</h3>
           {/* Add other userData fields as needed */}
           <h3>Date of Birth: {userDetails.userData.date_of_birth}</h3>
           <h3>Nationality: {userDetails.userData.nationality}</h3>
