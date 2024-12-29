@@ -8,6 +8,7 @@ import "./App.css";
 
 import BlackAndWhite from "./Templates/BlackAndWhite/BlackAndWhite";
 import MinimalAndModern from "./Templates/MinimalAndModern/MinimalAndModern";
+import Sleekfolio from "./Templates/Sleekfolio/sleekfolio";
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/support" element={<Support />} />
         <Route path="/template/black-and-white" element={<BlackAndWhite />} />
         <Route path="/template/minimal-and-modern" element={<MinimalAndModern />} />
+        <Route path="/template/sleekfolio" element={<Sleekfolio />} />
       </Routes>
     </Router>
   );

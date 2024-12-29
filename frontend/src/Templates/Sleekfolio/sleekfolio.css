@@ -1,0 +1,217 @@
+
+/* Main Wrapper for the portfolio */
+.wrapper-sleekfolio {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #f5f5f5; /* Soft light background */
+    padding: 3rem;
+}
+
+/* Container for all portfolio content */
+.container-sleekfolio {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #fff; /* Clean white background */
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Section */
+/* Design 2: Circular Profile with Vertical Layout */
+.container-sleekfolio .headerr {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    /* text-align: center; */
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.container-sleekfolio .headerr .header-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-sleekfolio .headerr .profile-image {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 6px solid #3498db;
+    transition: transform 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.container-sleekfolio .headerr .profile-image:hover {
+    transform: scale(1.1);
+}
+
+.container-sleekfolio .headerr .header-info h1 {
+    font-size: 2.8rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.container-sleekfolio .headerr .header-info h2 {
+    font-size: 1.7rem;
+    color: #3498db;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.container-sleekfolio .headerr .header-info p {
+    font-size: 1.1rem;
+    color: #777;
+    line-height: 1.6;
+    max-width: 100%;
+    text-align: justify;
+}
+
+.container-sleekfolio .headerr .header-details {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+}
+
+.container-sleekfolio .headerr .header-details ul {
+    list-style: none;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.container-sleekfolio .headerr .header-details li {
+    margin-bottom: 1rem;
+}
+
+.container-sleekfolio .headerr .header-details strong {
+    color: #333;
+}
+
+
+
+/* Section Title Styles */
+.container-sleekfolio h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Education, Experience, and Projects sections */
+.container-sleekfolio section {
+    margin-bottom: 3rem;
+}
+
+/* Education List, Experience List, and Project Grid */
+.container-sleekfolio .education-list,
+.container-sleekfolio .experience-list,
+.container-sleekfolio .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 2rem;
+}
+
+.container-sleekfolio .education-item,
+.container-sleekfolio .experience-item,
+.container-sleekfolio .project-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container-sleekfolio .education-item:hover,
+.container-sleekfolio .experience-item:hover,
+.container-sleekfolio .headerr .header-details:hover,+
+.container-sleekfolio .project-item:hover {
+    transform: translateY(-5px); /* Subtle hover effect */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.container-sleekfolio .education-item h3,
+.container-sleekfolio .experience-item h3,
+.container-sleekfolio .project-item h3 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.container-sleekfolio .education-item p,
+.container-sleekfolio .experience-item p,
+.container-sleekfolio .project-item p {
+    font-size: 1rem;
+    color: #777;
+    line-height: 1.6;
+}
+
+.container-sleekfolio .project-item a {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.container-sleekfolio .project-item a:hover {
+    color: #2980b9; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-sleekfolio .wrapper-sleekfolio {
+        padding: 1.5rem;
+    }
+
+    .container-sleekfolio .header-info h1 {
+        font-size: 2rem;
+    }
+
+    .container-sleekfolio .header-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .container-sleekfolio .header-details li {
+        font-size: 1rem;
+    }
+
+    .container-sleekfolio .education-item,
+    .container-sleekfolio .experience-item,
+    .container-sleekfolio .project-item {
+        padding: 1.2rem;
+    }
+
+    .container-sleekfolio .education-list,
+    .container-sleekfolio .experience-list,
+    .container-sleekfolio .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Hover Effects for Interactive Items */
+.container-sleekfolio .education-item:hover,
+.container-sleekfolio .experience-item:hover,
+.container-sleekfolio .project-item:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+}

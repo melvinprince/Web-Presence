@@ -1,135 +1,155 @@
-
-/* Template Container */
-.black-and-white {
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 40px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+/* General Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Header Section */
+.wrapper-black-and-white {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(145deg, #2c2c2c, #111); /* Softer dark gradient */
+    color: #f4f4f4; /* Lighter text color */
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.black-and-white {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #333; /* Dark gray background instead of pure black */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Softer shadow */
+}
+
 .black-and-white .first {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 40px;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .black-and-white .first img {
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #000; /* Black border for the image */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Softer white shadow */
 }
 
 .black-and-white .name h1 {
     font-size: 2.5rem;
-    color: #000;
-    font-weight: 700;
-    margin-left: 30px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.1;
+    color: #e0e0e0; /* Light gray text */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
 }
 
 .black-and-white .title h2 {
-    font-size: 1.4rem;
-    color: #777;
-    margin-left: 30px;
-    font-weight: 400;
-    text-transform: capitalize;
+    font-size: 1.5rem;
+    color: #ddd; /* Lighter gray for less contrast */
+    margin-top: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* About Section */
 .black-and-white .about {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0; /* Soft separator line */
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #222; /* Softer background for about section */
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Softer inner shadow */
 }
 
 .black-and-white .about p {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 12px;
-    line-height: 1.8;
+    margin-bottom: 10px;
+    color: #ccc; /* Lighter text in about section */
 }
 
-.black-and-white .about p:first-child {
-    font-weight: 600;
-    color: #000;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-}
-
-/* Skills, Education, Languages Section */
-.black-and-white .sk-ed-lg {
+.black-and-white .sk-lg {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    gap: 20px;
 }
 
-.black-and-white .sk-ed-lg div {
-    flex-basis: 30%;
+.black-and-white .skills, .black-and-white .languages {
+    flex: 1;
+    background: #2a2a2a; /* Softer background for skills and languages */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Softer inner shadow */
 }
 
-.black-and-white .sk-ed-lg p {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.black-and-white .skills p, .black-and-white .languages p {
+    margin-bottom: 10px;
+    color: #bbb; /* Softer text color */
 }
 
-.black-and-white .sk-ed-lg p:nth-child(2) {
-    color: #666;
-    font-weight: 400;
-    margin-bottom: 16px;
+.black-and-white .education, .black-and-white .experience, .black-and-white .projects {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #333; /* Softer background */
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); /* Softer inner shadow */
 }
 
-/* Experience and Projects Section */
-.black-and-white .experience, .black-and-white .projects {
-    margin-bottom: 40px;
+.black-and-white .education p, .black-and-white .experience p, .black-and-white .projects p {
+    color: #ccc; /* Lighter text */
+    margin-bottom: 10px;
 }
 
-.black-and-white .experience p, .black-and-white .projects p {
-    font-size: 1.3rem;
-    color: #333;
-    margin-bottom: 12px;
-    line-height: 1.8;
+.black-and-white .education div, .black-and-white .experience div, .black-and-white .projects div {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #444; /* Slightly lighter background */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Softer shadow */
 }
 
-.black-and-white .experience p:first-child, .black-and-white .projects p:first-child {
-    font-weight: 600;
-    color: #000;
-    font-size: 1.5rem;
-    text-transform: uppercase;
+.black-and-white .projects a {
+    color: #1e90ff;
+    text-decoration: none;
 }
 
+.black-and-white .projects a:hover {
+    text-decoration: underline;
+}
+
+/* Hover Effects */
+.black-and-white .about,
+.black-and-white .education,
+.black-and-white .experience,
+.black-and-white .projects,
+.black-and-white .skills,
+.black-and-white .languages {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.black-and-white .about:hover,
+.black-and-white .education:hover,
+.black-and-white .experience:hover,
+.black-and-white .projects:hover,
+.black-and-white .skills:hover,
+.black-and-white .languages:hover {
+    transform: scale(1.05); /* Zoom in slightly */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Light shadow effect */
+    color: #e0e0e0; /* Lighter text color */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .black-and-white .sk-lg {
+        flex-direction: column;
+    }
+
     .black-and-white .first {
         flex-direction: column;
         align-items: center;
-        text-align: center;
     }
 
     .black-and-white .first img {
-        margin-bottom: 20px;
-    }
-
-    .black-and-white .sk-ed-lg {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .black-and-white .sk-ed-lg div {
-        flex-basis: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 }

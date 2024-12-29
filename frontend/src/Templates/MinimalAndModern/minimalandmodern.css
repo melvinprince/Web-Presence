@@ -1,0 +1,141 @@
+/* General Styles */
+.wrapper-minimal-and-modern {
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container */
+.minimal-and-modern {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+/* Profile Section */
+.minimal-and-modern .profile-header {
+    background: #4a90e2;
+    color: #fff;
+    text-align: center;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.minimal-and-modern .profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+    transition: transform 0.3s ease-in-out;
+}
+
+.minimal-and-modern .profile-image img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+.minimal-and-modern section {
+    padding: 20px 30px;
+    border-bottom: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.minimal-and-modern section:hover {
+    transform: translateY(-10px); /* Lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Skills and Languages Section */
+.minimal-and-modern .skills-languages {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.minimal-and-modern .skills, 
+.minimal-and-modern .languages {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.minimal-and-modern .skills:hover, 
+.minimal-and-modern .languages:hover {
+    transform: translateY(-10px) scale(1.03); /* Lift and zoom */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Education and Experience Items */
+.minimal-and-modern .education-item,
+.minimal-and-modern .experience-item {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.minimal-and-modern .education-item:hover,
+.minimal-and-modern .experience-item:hover {
+    transform: translateX(10px); /* Subtle slide effect */
+    background: #f0f8ff; /* Light blue background on hover */
+}
+
+/* Projects Section */
+.minimal-and-modern .project-item {
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.minimal-and-modern .project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Links */
+.minimal-and-modern .project-item a {
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.minimal-and-modern .project-item a:hover {
+    color: #0056b3; /* Darker blue */
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}

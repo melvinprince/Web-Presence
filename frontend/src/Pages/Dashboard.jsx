@@ -155,7 +155,7 @@ export default function Dashboard() {
         </div>
         <button onClick={handleOpen}>Add/Edit Details</button>
       </div>
-      <TemplateSelector userDetails={userDetails} />
+      <TemplateSelector userDetails={userDetails.userData} />
       {isPopupVisible && (
         <PopUpDetailsEntry
           handleClose={handleClose}
