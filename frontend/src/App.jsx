@@ -5,17 +5,30 @@ import Support from "./Pages/Support";
 import AuthPage from "./Pages/AuthPage";
 import LogoutHandler from "./services/logoutHandles";
 import "./App.css";
-
+import { useState, useEffect } from "react";
 import BlackAndWhite from "./Templates/BlackAndWhite/BlackAndWhite";
 import MinimalAndModern from "./Templates/MinimalAndModern/MinimalAndModern";
 import Sleekfolio from "./Templates/Sleekfolio/sleekfolio";
 
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+      // Simulate checking authentication status
+      useEffect(() => {
+          // Replace this with actual authentication check
+          const token = localStorage.getItem('token');
+          if (token) {
+              setIsAuthenticated(true);
+          } else {
+              setIsAuthenticated(false);
+          }
+      }, []);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={isAuthenticated ? <Dashboard /> : <Home />}/>
         <Route path="/authpage" element={<AuthPage />} />
         <Route path="/logout" element={<LogoutHandler/>} />
         <Route path="/dashboard" element={<Dashboard />} />

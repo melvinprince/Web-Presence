@@ -11,8 +11,8 @@ const LogoutHandler = () => {
 
   useEffect(() => {
     logoutUser();
-    dispatch(clearUserDetails());
     navigate('/');
+    dispatch(clearUserDetails());
   }, [dispatch, navigate]);
 
   return null; 
