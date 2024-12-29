@@ -17,24 +17,11 @@ router.get("/get-details", authMiddleware, userDetailsControllers.fetchUserDetai
 
 // Image Upload route
 router.post("/upload-image", authMiddleware, upload.single("image"), userDetailsControllers.uploadUserImage);
-// 
-// // Education routes
-// router.post("/education", authMiddleware, userDetailsControllers.addEducation);
-// router.put("/education/", authMiddleware, userDetailsControllers.updateEducation);
-// 
-// console.log("reached 3");
-// 
-// // Project routes
-// router.post("/projects", authMiddleware, userDetailsControllers.addProject);
-// router.put("/projects/", authMiddleware, userDetailsControllers.updateProject);
-// 
-// // Experience routes
-// router.post("/experience", authMiddleware, userDetailsControllers.addExperience);
-// router.put("/experience/", authMiddleware, userDetailsControllers.updateExperience);
-// 
-// // Social Links route
-// router.post("/social-links", authMiddleware, userDetailsControllers.addOrUpdateSocialLinks);
-// 
-// console.log("exited");
+
+router.delete(
+  "/delete-entry",
+  authMiddleware,
+  userDetailsControllers.deleteEntry
+); 
 
 module.exports = router;

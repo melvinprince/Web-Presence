@@ -3,10 +3,10 @@ import axios from "./axiosInstance";
 const addOrUpdateUserDetails = async (dataToSubmit) => {
   try {
     console.log("userDetailsService.js - dataToSubmit", dataToSubmit);
-    const token = localStorage.getItem("token"); // Get token from storage
+    const token = localStorage.getItem("token");
     const { data } = await axios.post("/user/add-details", dataToSubmit, {
       headers: {
-        Authorization: `Bearer ${token}`, // Attach token to request
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
@@ -22,7 +22,7 @@ const getUserDetails = async () => {
     const token = localStorage.getItem("token");
     const { data } = await axios.get("/user/get-details", {
       headers: {
-        Authorization: `Bearer ${token}`, // Attach token to request
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
@@ -33,24 +33,39 @@ const getUserDetails = async () => {
   }
 };
 
-// New function to handle image upload
 const uploadUserImage = async (formData) => {
   try {
     console.log("triggered uploadUserImage from userDetailsService.js");
 
-    const token = localStorage.getItem("token"); // Get token from storage
-    // console.log("formdata from service", formData);
-    
+    const token = localStorage.getItem("token");
+
     const { data } = await axios.post("/user/upload-image", formData, {
       headers: {
-        "Content-Type": "multipart/form-data", // Ensure the content type is multipart/form-data for file uploads
-        Authorization: `Bearer ${token}`, // Attach token to request
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
-    return data; // Assuming the response contains the image URL or relevant data
+    return data;
   } catch (err) {
     throw new Error(err.response?.data?.message || "Failed to upload image.");
   }
 };
 
-export { addOrUpdateUserDetails, getUserDetails, uploadUserImage };
+const deleteEntry = async (category, index) => {
+  try {
+    const token = localStorage.getItem("token");
+    const { data } = await axios.delete(
+      `/user/delete-entry?category=${category}&index=${index}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  } catch (err) {
+    throw new Error(err.response?.data?.message || "Failed to delete entry.");
+  }
+};
+
+export { addOrUpdateUserDetails, getUserDetails, uploadUserImage, deleteEntry };

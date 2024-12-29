@@ -210,154 +210,6 @@ class UserDetails {
     }
   }
 
-  // ... rest of your UserDetails class ...
-
-  //   static async addOrUpdateEducation(user_id, educationData) {
-  //     console.log("Received educationData:", educationData); // Log the input data
-  //
-  //     for (const edu of educationData) {
-  //       console.log("Processing education entry:", edu); // Log each entry being processed
-  //
-  //       try {
-  //         if (edu.id) {
-  //           console.log("Updating education with ID:", edu.id); // Log the update operation
-  //
-  //           const updatedEducation = await db.one(
-  //             `
-  //           INSERT INTO education (id, user_id, college_name, graduation_year, graduation_month, degree, major)
-  //           VALUES ($/id/, $/user_id/, $/college_name/, $/graduation_year/, $/graduation_month/, $/degree/, $/major/)
-  //           ON CONFLICT (id)
-  //           DO UPDATE SET
-  //               college_name = EXCLUDED.college_name,
-  //               graduation_year = EXCLUDED.graduation_year,
-  //               graduation_month = EXCLUDED.graduation_month,
-  //               degree = EXCLUDED.degree,
-  //               major = EXCLUDED.major
-  //           RETURNING id;
-  //
-  //           `,
-  //             { ...edu, user_id }
-  //           );
-  //
-  //           console.log("Updated education:", updatedEducation); // Confirm successful update
-  //
-  //           if (!updatedEducation) {
-  //             throw new Error(`Education update failed for id ${edu.id}`);
-  //           }
-  //         } else {
-  //           console.log("Inserting new education entry:", edu); // Log the insert operation
-  //
-  //           await db.none(
-  //             `
-  //           INSERT INTO education (user_id, college_name, graduation_year, graduation_month, degree, major)
-  //           VALUES ($/user_id/, $/college_name/, $/graduation_year/, $/graduation_month/, $/degree/, $/major/)
-  //           `,
-  //             { ...edu, user_id }
-  //           );
-  //         }
-  //       } catch (err) {
-  //         console.error("Error in addOrUpdateEducation:", err); // Log any errors
-  //         throw err;
-  //       }
-  //     }
-  //   }
-
-  //   static async addOrUpdateProject(user_id, projectData) {
-  //     console.log("Received projectData:", projectData); // Log the input data
-  //
-  //     for (const project of projectData) {
-  //       console.log("Processing project entry:", project); // Log each entry being processed
-  //
-  //       try {
-  //         if (project.id) {
-  //           console.log("Updating project with ID:", project.id); // Log the update operation
-  //
-  //           const updatedProject = await db.one(
-  //             `
-  //           INSERT INTO projects (id, user_id, project_name, project_outcome, project_link)
-  //           VALUES ($/id/, $/user_id/, $/project_name/, $/project_outcome/, $/project_link/)
-  //           ON CONFLICT (id)
-  //           DO UPDATE SET
-  //           project_name = EXCLUDED.project_name,
-  //           project_link = EXCLUDED.project_link,
-  //           project_outcome = EXCLUDED.project_outcome
-  //           RETURNING id;
-  //           `,
-  //             { ...project, user_id }
-  //           );
-  //
-  //           console.log("Updated project:", updatedProject); // Confirm successful update
-  //
-  //           if (!updatedProject) {
-  //             throw new Error(`Project update failed for id ${project.id}`);
-  //           }
-  //         } else {
-  //           console.log("Inserting new project entry:", project); // Log the insert operation
-  //
-  //           await db.none(
-  //             `
-  //           INSERT INTO projects (user_id, project_name, project_outcome, project_link)
-  //           VALUES ($/user_id/, $/project_name/, $/project_outcome/, $/project_link/)
-  //           `,
-  //             { ...project, user_id }
-  //           );
-  //         }
-  //       } catch (err) {
-  //         console.error("Error in addOrUpdateProject:", err); // Log any errors
-  //         throw err;
-  //       }
-  //     }
-  //   }
-  //
-  //   static async addOrUpdateExperience(user_id, experienceData) {
-  //     console.log("Received experienceData:", experienceData); // Log the input data
-  //
-  //     for (const experience of experienceData) {
-  //       console.log("Processing experience entry:", experience); // Log each entry being processed
-  //
-  //       try {
-  //         if (experience.id) {
-  //           console.log("Updating experience with ID:", experience.id); // Log the update operation
-  //
-  //           const updatedExperience = await db.one(
-  //             `
-  //           INSERT INTO experience (id, user_id, company_name, title, start_date, end_date)
-  //           VALUES ($/id/, $/user_id/, $/company_name/, $/title/, $/start_date/, $/end_date/)
-  //           ON CONFLICT (id)
-  //           DO UPDATE SET
-  //               company_name = EXCLUDED.company_name,
-  //               title = EXCLUDED.title,
-  //               start_date = EXCLUDED.start_date,
-  //               end_date = EXCLUDED.end_date
-  //           RETURNING id;
-  //
-  //           `,
-  //             { ...experience, user_id }
-  //           );
-  //
-  //           console.log("Updated experience:", updatedExperience); // Confirm successful update
-  //
-  //           if (!updatedExperience) {
-  //             throw new Error(`Experience update failed for id ${experience.id}`);
-  //           }
-  //         } else {
-  //           console.log("Inserting new experience entry:", experience); // Log the insert operation
-  //
-  //           await db.none(
-  //             `
-  //           INSERT INTO experience (user_id, company_name, title, start_date, end_date)
-  //           VALUES ($/user_id/, $/company_name/, $/title/, $/start_date/, $/end_date/)
-  //           `,
-  //             { ...experience, user_id }
-  //           );
-  //         }
-  //       } catch (err) {
-  //         console.error("Error in addOrUpdateExperience:", err); // Log any errors
-  //         throw err;
-  //       }
-  //     }
-  //   }
-
   static async addOrUpdateSocialLinks(user_id, socialLinks) {
     console.log(
       "userDetailsModel.js - addOrUpdateSocialLinks - user_id",
@@ -485,6 +337,104 @@ class UserDetails {
       throw err;
     }
   }
+
+  static async deleteEducationEntry(userId, index) {
+    try {
+      // 1. Make sure the index is valid
+      const educationCount = await db.one(
+        `SELECT COUNT(*) FROM education WHERE user_id = $1`,
+        [userId]
+      );
+      if (index < 0 || index >= educationCount.count) {
+        return null; 
+      }
+
+      // 2. Get the ID of the education entry to delete
+      const educationId = await db.oneOrNone(
+        `SELECT id FROM education WHERE user_id = $1 OFFSET $2 LIMIT 1`,
+        [userId, index]
+      );
+
+      if (!educationId) {
+        return null;
+      }
+
+      // 3. Delete the education entry
+      await db.none(`DELETE FROM education WHERE id = $1`, [educationId.id]);
+
+      // 4. Fetch and return the updated education data (optional)
+      return await this.fetchEducation(userId);
+    } catch (error) {
+      console.error("Error deleting education entry:", error);
+      throw error;
+    }
+  }
+
+  static async deleteProjectEntry(userId, index) {
+    try {
+      // 1. Make sure the index is valid
+      const projectCount = await db.one(
+        `SELECT COUNT(*) FROM projects WHERE user_id = $1`,
+        [userId]
+      );
+      if (index < 0 || index >= projectCount.count) {
+        return null; 
+      }
+
+      // 2. Get the ID of the project entry to delete
+      const projectId = await db.oneOrNone(
+        `SELECT id FROM projects WHERE user_id = $1 OFFSET $2 LIMIT 1`,
+        [userId, index]
+      );
+
+      if (!projectId) {
+        return null;
+      }
+
+      // 3. Delete the project entry
+      await db.none(`DELETE FROM projects WHERE id = $1`, [projectId.id]);
+
+      // 4. Fetch and return the updated project data (optional)
+      return await this.fetchProjects(userId); 
+    } catch (error) {
+      console.error("Error deleting project entry:", error);
+      throw error;
+    }
+  }
+
+  static async deleteExperienceEntry(userId, index) {
+    try {
+      // 1. Make sure the index is valid
+      const experienceCount = await db.one(
+        `SELECT COUNT(*) FROM experience WHERE user_id = $1`,
+        [userId]
+      );
+      if (index < 0 || index >= experienceCount.count) {
+        return null; 
+      }
+
+      // 2. Get the ID of the experience entry to delete
+      const experienceId = await db.oneOrNone(
+        `SELECT id FROM experience WHERE user_id = $1 OFFSET $2 LIMIT 1`,
+        [userId, index]
+      );
+
+      if (!experienceId) {
+        return null;
+      }
+
+      // 3. Delete the experience entry
+      await db.none(`DELETE FROM experience WHERE id = $1`, [experienceId.id]);
+
+      // 4. Fetch and return the updated experience data (optional)
+      return await this.fetchExperience(userId); 
+    } catch (error) {
+      console.error("Error deleting experience entry:", error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = UserDetails;
+

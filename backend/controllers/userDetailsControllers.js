@@ -84,8 +84,54 @@ const uploadUserImage = async (req, res) => {
   }
 };
 
+const deleteEntry = async (req, res) => {
+  try {
+    const { category, index } = req.query;
+    const userId = req.userId; // Assuming your authMiddleware adds user ID to req
+
+    // 1. Validate category and index
+    const validCategories = ["education", "projects", "experience"];
+    if (!validCategories.includes(category) || isNaN(index)) {
+      return res.status(400).json({ message: "Invalid category or index" });
+    }
+
+    // 2. Find user data in the database (replace with your actual logic)
+    const user = await userDetails.fetchUserDetails(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User details not found" });
+    }
+
+    // 3. Delete the entry from the appropriate array
+    let updatedData;
+    switch (category) {
+      case "education":
+        updatedData = await userDetails.deleteEducationEntry(userId, index);
+        break;
+      case "projects":
+        updatedData = await userDetails.deleteProjectEntry(userId, index);
+        break;
+      case "experience":
+        updatedData = await userDetails.deleteExperienceEntry(userId, index);
+        break;
+      default:
+        return res.status(400).json({ message: "Invalid category" });
+    }
+
+    if (!updatedData) {
+      return res.status(404).json({ message: "Entry not found" });
+    }
+
+    // 4. Send success response
+    res.json({ message: "Entry deleted successfully", updatedData });
+  } catch (error) {
+    console.error("Error deleting entry:", error);
+    res.status(500).json({ message: "Failed to delete entry" });
+  }
+};
+
 module.exports = {
   createOrUpdateUserDetails,
   fetchUserDetails,
   uploadUserImage,
+  deleteEntry,
 };
