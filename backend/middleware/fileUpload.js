@@ -38,7 +38,7 @@ const upload = multer({
 // Delete image function
 const deleteImage = (req, res, imageName) => {
   const imagePath = `uploads/${imageName}`;
-  console.log("Deleting image:", imagePath);
+  // console.log("Deleting image:", imagePath);
 
   fs.unlink(imagePath, (err) => {
     if (err) {

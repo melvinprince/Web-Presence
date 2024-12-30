@@ -99,24 +99,23 @@ export default function Dashboard() {
         <h1>Dashboard</h1>
         <button className="add-edit-button addedit-top" onClick={handleOpen}>Add/Edit Details</button> {/* Added class to button */}
 
-        <div className="details-container"> {/* Added container for details */}
-          <div className="user-details"> {/* Added class for user details */}
+        <div className="details-container"> 
+          <div className="user-details"> 
             {userDetails.userData.image_url && (
               <img className="profile-image" src={userDetails.userData.image_url} alt="User Profile" />
             )}
-            <div className="user-info"> {/* Added container for user info */}
+            <div className="user-info"> 
               <h3>Name: </h3>{userDetails.userData.name}
               <h3>Email: </h3>{userDetails.userData.email}
               <h3>Title: </h3>{userDetails.userData.title}
               <h3>About: </h3>{userDetails.userData.about}
-              {/* Add other userData fields as needed */}
               <h3>Date of Birth: </h3>{userDetails.userData.date_of_birth}
               <h3>Nationality: </h3>{userDetails.userData.nationality}
               <h3>Current Country: </h3>{userDetails.userData.current_country}
             </div>
           </div>
 
-          <div className="profile-links"> {/* Added class for profile links */}
+          <div className="profile-links">
             <ul>
             <h3>Profile Links:</h3>
               {userDetails.profileLinks.linkedin && (
@@ -146,8 +145,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="sections"> {/* Added class for sections */}
-            <div className="section"> {/* Added class for each section */}
+          <div className="sections"> 
+            <div className="section"> 
               <h3>Education:</h3>
               <ul>
                 {userDetails.education.map((edu, index) => (
@@ -188,7 +187,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <button className="add-edit-button" onClick={handleOpen}>Add/Edit Details</button> {/* Added class to button */}
+        <button className="add-edit-button" onClick={handleOpen}>Add/Edit Details</button> 
       </div>
       <TemplateSelector userDetails={userDetails.userData} />
       {isPopupVisible && (

@@ -5,9 +5,7 @@ import './css/Header.css';
 export default function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Simulate checking authentication status
     useEffect(() => {
-        // Replace this with actual authentication check
         const token = localStorage.getItem('token');
         if (token) {
             setIsAuthenticated(true);

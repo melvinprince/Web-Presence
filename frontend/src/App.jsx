@@ -18,7 +18,6 @@ export default function App() {
       useEffect(() => {
         console.log("Checking authentication status triggered");
         
-          // Replace this with actual authentication check
           const token = localStorage.getItem('token');
           if (token) {
               setIsAuthenticated(true);

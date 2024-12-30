@@ -137,7 +137,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
 
     const handleImageRemove = async () => {
         try {
-            // 1. Make API call to delete image
             const imageName = formData.image_url.split('/').pop(); 
             console.log("imageName", imageName);
             
@@ -149,7 +148,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
             throw new Error(`Failed to delete image: ${response.status} ${response.statusText}`);
             }
 
-            // 2. Clear the image URL in the form data
             setFormData((prevState) => ({
             ...prevState,
             image_url: "",
@@ -166,7 +164,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                 <button className="close-button" onClick={handleClose}>×</button>
                 <h2>Enter Your Details</h2>
                 <form onSubmit={handleSubmit}>
-                    {/* Basic Details */}
                     <div className="form-group">
                         <label>Name</label>
                         <input type="text" name="name" value={formData.name} onChange={handleChange} required/>
@@ -196,7 +193,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                         <input type="text" name="current_country" value={formData.current_country} onChange={handleChange} />
                     </div>
 
-                    {/* Profile Links */}
                     <h3 className="h3-gapping">Profile Links</h3>
                     {["linkedin", "github", "website"].map((link) => (
                         <div className="form-group" key={link}>
@@ -211,7 +207,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                         </div>
                     ))}
 
-                    {/* Education Section */}
                     <h3 className="h3-gapping">Education</h3>
                     {formData.education.map((edu, index) => (
                         <div key={index} className="nested-form-group">
@@ -265,7 +260,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     </div>
 
                 
-                    {/* Projects Section */}
                     <h3 className="h3-gapping">Projects</h3>
                     {formData.projects.map((project, index) => (
                         <div key={index} className="nested-form-group">
@@ -291,7 +285,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     ))}
                     <button type="button" onClick={() => addEntry("projects")}>Add Project</button>
 
-                    {/* Experience Section */}
                     <h3 className="h3-gapping">Experience</h3>
                     {formData.experience.map((exp, index) => (
                         <div key={index} className="nested-form-group">
@@ -325,7 +318,6 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     ))}
                     <button type="button" onClick={() => addEntry("experience")}>Add Experience</button>
 
-                    {/* Image Upload */}
                     <div className="form-group">
                         <label>Profile Image Upload (Optional)</label>
                         <input type="file" onChange={handleImageUpload} />

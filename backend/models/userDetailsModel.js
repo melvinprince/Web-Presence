@@ -2,12 +2,12 @@ const db = require("./db");
 
 class UserDetails {
   static async createOrUpdateUserDetails(user_id, userData) {
-    console.log(
-      "userDetailsModel.js - createOrUpdateUserDetails - user_id",
-      user_id,
-      "userData",
-      userData
-    );
+    // console.log(
+    //   "userDetailsModel.js - createOrUpdateUserDetails - user_id",
+    //   user_id,
+    //   "userData",
+    //   userData
+    // );
 
     // Preprocess userData to set undefined or empty fields to null
     Object.keys(userData).forEach((key) => {
@@ -19,13 +19,13 @@ class UserDetails {
     try {
       // Check if user details already exist
       const existingUser = await this.fetchUserDetails(user_id);
-      console.log(
-        "userDetailsModel.js - createOrUpdateUserDetails - existingUser",
-        existingUser
-      );
+      // console.log(
+      //   "userDetailsModel.js - createOrUpdateUserDetails - existingUser",
+      //   existingUser
+      // );
 
       if (existingUser) {
-        console.log("User details found, updating...");
+        // console.log("User details found, updating...");
         const columns = Object.keys(userData);
         const values = Object.values(userData);
         const setClause = columns
@@ -39,10 +39,10 @@ class UserDetails {
         RETURNING id
       `;
         const result = await db.one(updateQuery, [user_id, ...values]);
-        console.log("User details updated:", result);
+        // console.log("User details updated:", result);
         return result;
       } else {
-        console.log("User details not found, creating...");
+        // console.log("User details not found, creating...");
         const columns = Object.keys(userData).join(", ");
         const values = Object.values(userData);
         const placeholders = values
@@ -55,7 +55,7 @@ class UserDetails {
         RETURNING id
       `;
         const result = await db.one(insertQuery, [user_id, ...values]);
-        console.log("User details created:", result);
+        // console.log("User details created:", result);
         return result;
       }
     } catch (err) {
@@ -65,7 +65,7 @@ class UserDetails {
   }
 
   static async addOrUpdateEducation(user_id, educationData) {
-    console.log("Received educationData:", educationData);
+    // console.log("Received educationData:", educationData);
 
     //Use a set to efficiently track existing IDs
     const existingIds = new Set();
@@ -73,12 +73,12 @@ class UserDetails {
       `SELECT id FROM education WHERE user_id = $1`,
       [user_id]
     );
-    console.log("Existing education:", existingEducation);
+    // console.log("Existing education:", existingEducation);
     
     existingEducation.forEach((item) => existingIds.add(item.id));
 
     for (const edu of educationData) {
-      console.log("Processing education entry:", edu);
+      // console.log("Processing education entry:", edu);
 
       if (edu.id && existingIds.has(edu.id)) {
         // Update existing entry (if ID is present and already exists)
@@ -87,7 +87,7 @@ class UserDetails {
             `UPDATE education SET college_name = $/college_name/, graduation_year = $/graduation_year/, graduation_month = $/graduation_month/, degree = $/degree/, major = $/major/ WHERE id = $/id/ RETURNING *`,
             edu
           );
-          console.log("Updated education:", updatedEducation);
+          // console.log("Updated education:", updatedEducation);
         } catch (err) {
           console.error("Error updating education:", err);
           throw err;
@@ -106,7 +106,7 @@ class UserDetails {
               edu.major,
             ]
           );
-          console.log("Inserted new education:", newEducation);
+          // console.log("Inserted new education:", newEducation);
         } catch (err) {
           console.error("Error inserting education:", err);
           throw err;
@@ -116,7 +116,7 @@ class UserDetails {
   }
 
   static async addOrUpdateProject(user_id, projectData) {
-    console.log("Received projectData:", projectData);
+    // console.log("Received projectData:", projectData);
 
     //Use a set to efficiently track existing IDs
     const existingIds = new Set();
@@ -127,7 +127,7 @@ class UserDetails {
     existingProjects.forEach((item) => existingIds.add(item.id));
 
     for (const project of projectData) {
-      console.log("Processing project entry:", project);
+      // console.log("Processing project entry:", project);
       if (project.id && existingIds.has(project.id)) {
         // Update existing entry (if ID is present and already exists)
         try {
@@ -135,7 +135,7 @@ class UserDetails {
             `UPDATE projects SET project_name = $/project_name/, project_outcome = $/project_outcome/, project_link = $/project_link/ WHERE id = $/id/ RETURNING *`,
             project
           );
-          console.log("Updated project:", updatedProject);
+          // console.log("Updated project:", updatedProject);
         } catch (err) {
           console.error("Error updating project:", err);
           throw err;
@@ -152,7 +152,7 @@ class UserDetails {
               project.project_link,
             ]
           );
-          console.log("Inserted new project:", newProject);
+          // console.log("Inserted new project:", newProject);
         } catch (err) {
           console.error("Error inserting project:", err);
           throw err;
@@ -162,7 +162,7 @@ class UserDetails {
   }
 
   static async addOrUpdateExperience(user_id, experienceData) {
-    console.log("Received experienceData:", experienceData);
+    // console.log("Received experienceData:", experienceData);
 
     //Use a set to efficiently track existing IDs
     const existingIds = new Set();
@@ -170,12 +170,12 @@ class UserDetails {
       `SELECT id FROM experience WHERE user_id = $1`,
       [user_id]
     );
-    console.log("Existing experiences:", existingExperiences);
+    // console.log("Existing experiences:", existingExperiences);
     
     existingExperiences.forEach((item) => existingIds.add(item.id));
 
     for (const experience of experienceData) {
-      console.log("Processing experience entry:", experience);
+      // console.log("Processing experience entry:", experience);
       if (experience.id && existingIds.has(experience.id)) {
         // Update existing entry (if ID is present and already exists)
         try {
@@ -183,7 +183,7 @@ class UserDetails {
             `UPDATE experience SET company_name = $/company_name/, title = $/title/, start_date = $/start_date/, end_date = $/end_date/ WHERE id = $/id/ RETURNING *`,
             experience
           );
-          console.log("Updated experience:", updatedExperience);
+          // console.log("Updated experience:", updatedExperience);
         } catch (err) {
           console.error("Error updating experience:", err);
           throw err;
@@ -201,7 +201,7 @@ class UserDetails {
               experience.end_date,
             ]
           );
-          console.log("Inserted new experience:", newExperience);
+          // console.log("Inserted new experience:", newExperience);
         } catch (err) {
           console.error("Error inserting experience:", err);
           throw err;
@@ -211,20 +211,20 @@ class UserDetails {
   }
 
   static async addOrUpdateSocialLinks(user_id, socialLinks) {
-    console.log(
-      "userDetailsModel.js - addOrUpdateSocialLinks - user_id",
-      user_id,
-      "socialLinks",
-      socialLinks
-    );
+    // console.log(
+    //   "userDetailsModel.js - addOrUpdateSocialLinks - user_id",
+    //   user_id,
+    //   "socialLinks",
+    //   socialLinks
+    // );
     const existingLinks = await db.oneOrNone(
       `SELECT id FROM social_links WHERE user_id = $1`,
       [user_id]
     );
-    console.log("Existing social links:", existingLinks);
+    // console.log("Existing social links:", existingLinks);/
 
     if (existingLinks) {
-      console.log("Social links found, updating...");
+      // console.log("Social links found, updating...");
 
       const query = `
         UPDATE social_links
@@ -248,7 +248,7 @@ class UserDetails {
       }
     } else {
       // If no existing links, insert new ones
-      console.log("Social links not found, inserting...");
+      // console.log("Social links not found, inserting...");
 
       const query = `
         INSERT INTO social_links (user_id, linkedin, github, website)
@@ -273,7 +273,7 @@ class UserDetails {
   }
 
   static async fetchUserDetails(user_id) {
-    console.log("userDetailsModel.js - fetchUserDetails - user_id", user_id);
+    // console.log("userDetailsModel.js - fetchUserDetails - user_id", user_id);
     try {
       const result = await db.oneOrNone(
         `SELECT * FROM user_details WHERE user_id = $1`,
@@ -287,7 +287,7 @@ class UserDetails {
   }
 
   static async fetchEducation(user_id) {
-    console.log("userDetailsModel.js - fetchEducation - user_id", user_id);
+    // console.log("userDetailsModel.js - fetchEducation - user_id", user_id);
     const query = `SELECT * FROM education WHERE user_id = $1`;
 
     try {
@@ -300,7 +300,7 @@ class UserDetails {
   }
 
   static async fetchProjects(user_id) {
-    console.log("userDetailsModel.js - fetchProjects - user_id", user_id);
+    // console.log("userDetailsModel.js - fetchProjects - user_id", user_id);
     const query = `SELECT * FROM projects WHERE user_id = $1`;
 
     try {
@@ -313,7 +313,7 @@ class UserDetails {
   }
 
   static async fetchExperience(user_id) {
-    console.log("userDetailsModel.js - fetchExperience - user_id", user_id);
+    // console.log("userDetailsModel.js - fetchExperience - user_id", user_id);
     const query = `SELECT * FROM experience WHERE user_id = $1`;
 
     try {
@@ -326,7 +326,7 @@ class UserDetails {
   }
 
   static async fetchSocialLinks(user_id) {
-    console.log("userDetailsModel.js - fetchSocialLinks - user_id", user_id);
+    // console.log("userDetailsModel.js - fetchSocialLinks - user_id", user_id);
     const query = `SELECT * FROM social_links WHERE user_id = $1`;
 
     try {

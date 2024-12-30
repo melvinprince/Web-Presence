@@ -4,7 +4,6 @@ import axios from "../services/axiosInstance"; // Import custom axios instance
 export const SET_USER_DETAILS = "SET_USER_DETAILS";
 export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE";
 
-// Action Creators
 
 // Set user details in Redux store
 export const setUserDetails = (details) => ({
@@ -17,8 +16,6 @@ export const updateUserImage = (imageUrl) => ({
   type: UPDATE_USER_IMAGE,
   payload: imageUrl,
 });
-
-// Thunk Actions
 
 // Fetch user details from the backend
 export const fetchUserDetails = () => async (dispatch) => {
@@ -45,7 +42,6 @@ export const saveUserDetails = (details) => async (dispatch) => {
   }
 };
 
-// Actions/userActions.js
 
 export const clearUserDetails = () => ({
   type: "CLEAR_USER_DETAILS",

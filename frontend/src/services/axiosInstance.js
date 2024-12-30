@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000", // Ensure this points to your backend API base URL
+  baseURL: "http://localhost:3000", 
 });
 
-// Request interceptor (already present, good)
+// Request interceptor
 instance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -16,7 +16,7 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor (add this)
+// Response interceptor 
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -27,15 +27,14 @@ instance.interceptors.response.use(
         const response = await axios.post("/refresh-token"); // Request new token
         const newAccessToken = response.data.accessToken;
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        localStorage.setItem("token", newAccessToken); // Update local storage
+        localStorage.setItem("token", newAccessToken); 
         return instance(originalRequest); // Retry the original request
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
-        // Handle refresh token failure (log out user, redirect, etc.)
         localStorage.removeItem("token");
         localStorage.removeItem("tokenExpiration");
-        localStorage.removeItem("userDetails"); // Remove other user-related data
-        window.location.href = "/login"; // Redirect to login page
+        localStorage.removeItem("userDetails"); 
+        window.location.href = "/login"; 
         return Promise.reject(error);
       }
     }

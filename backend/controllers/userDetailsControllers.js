@@ -5,7 +5,7 @@ const userDetails = require("../models/userDetailsModel");
 const createOrUpdateUserDetails = async (req, res) => {
   const user_id = req.userId;
   const dataToSubmit = req.body;
-  console.log("createUserDetails triggered from userDetailsController.js", dataToSubmit, user_id);
+  // console.log("createUserDetails triggered from userDetailsController.js", dataToSubmit, user_id);
   
 
   try {
@@ -14,7 +14,7 @@ const createOrUpdateUserDetails = async (req, res) => {
     await userDetails.addOrUpdateEducation(user_id, dataToSubmit.education);
     await userDetails.addOrUpdateProject(user_id, dataToSubmit.projects);
     await userDetails.addOrUpdateExperience(user_id, dataToSubmit.experience );
-    console.log("finished entering data");
+    // console.log("finished entering data");
     
     res.status(200).json({ message: "User details created successfully" });
   } catch (err) {

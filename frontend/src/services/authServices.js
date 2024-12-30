@@ -4,7 +4,7 @@ const loginUser = async (email, password) => {
   try {
     const { data } = await axiosInstance.post("/user/login", { email, password });
     localStorage.setItem("token", data.accessToken);
-    const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days
+    const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; 
     localStorage.setItem("tokenExpiration", expirationTime);
     return data;
   } catch (err) {
@@ -16,7 +16,7 @@ const registerUser = async (email, password) => {
   try {
     const { data } = await axiosInstance.post("/user/register", { email, password });
     localStorage.setItem("token", data.accessToken);
-    const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days
+    const expirationTime = Date.now() + 7 * 24 * 60 * 60 * 1000; 
     localStorage.setItem("tokenExpiration", expirationTime);
     return data;
   } catch (err) {

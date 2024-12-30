@@ -87,7 +87,7 @@ const deleteImage = async (imageName) => {
             throw new Error(`Failed to delete image: ${response.status} ${response.statusText}`);
         }
 
-        return response.data; // Return any data from the server if needed
+        return response.data; 
 
     } catch (err) {
         throw new Error(err.response?.data?.message || "Failed to delete image.");

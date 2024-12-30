@@ -9,15 +9,15 @@ const userReducer = (state = initialState, action) => {
     case "SET_USER_DETAILS":
       return {
         ...state,
-        userDetails: action.payload, // Update the userDetails state
+        userDetails: action.payload, 
       };
     case "CLEAR_USER_DETAILS":
       return {
         ...state,
-        userDetails: null, // Clear the userDetails state
+        userDetails: null, 
       };
     default:
-      return state; // Return current state if no action matches
+      return state; 
   }
 };
 

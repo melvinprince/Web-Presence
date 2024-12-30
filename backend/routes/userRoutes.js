@@ -31,7 +31,7 @@ router.delete("/delete-image/:imageName", (req, res) => {
   const imageName = req.params.imageName;
   console.log("Image name:", imageName);
   
-  deleteImage(req, res, imageName); // Call the deleteImage function
+  deleteImage(req, res, imageName);
 });
 
 module.exports = router;
