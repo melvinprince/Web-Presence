@@ -1,82 +1,110 @@
 .authpage {
-  height: 100vh;
+  background-color: var(--primary-color);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--secondary-color)
 }
 
 .authpage .content {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: var(--spacing-medium);
 }
 
-.auth-form {
-  background-color: var(--primary-text-color);
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px var(--secondary-text-color);
-  width: 350px;
+.authpage .auth-form {
+  background-color: #fff;
+  padding: 40px; /* Increased padding */
+  border-radius: 12px; /* More pronounced rounded corners */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* More defined shadow */
+  text-align: center;
+  max-width: 450px; /* Limit form width */
+}
+.authpage .auth-form form {
+  margin-top: var(--spacing-medium);
 }
 
-.auth-btn {
+.authpage .auth-btn {
+  background-color: transparent; /* Transparent background */
+  color: var(--secondary-color); /* Teal color for buttons */
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-  margin-bottom: 20px;
-}
-
-.auth-btn:hover {
-  opacity: 0.8;
-}
-
-.active.auth-btn {
-  background-color: var(--secondary-color); /* Blue */
-  color: var(--primary-color);
-}
-
-.form-content {
-  margin-bottom: 20px;
-}
-
-.form-content label {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--primary-color); /* Grayish label color */
-}
-
-.form-content input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.form-content input:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-}
-
-form button {
-  background-color: var(--primary-color);
-  color: var(--secondary-text-color);
-  border: none;
-  padding: 12px 25px;
+  margin: 0 10px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  margin-top: 10px;
+  position: relative; /* For underline effect */
+  transition: color 0.3s ease;
 }
 
-form button:hover {
+.authpage .auth-btn::before { /* Underline effect */
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
   background-color: var(--secondary-color);
-  color: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-.error {
-  color: red;
-  margin-bottom: 10px;
+.authpage .auth-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.authpage .auth-btn.active {
+  color: #00808a; /* Darker shade for active tab */
+}
+
+.authpage .auth-btn.active::before { /* Underline for active tab */
+  transform: scaleX(1);
+}
+
+.authpage .error {
+  color: var(--error-color);
+  margin-bottom: var(--spacing-small);
+}
+
+.authpage .form-content {
+  margin-bottom: 25px; /* Increased spacing */
+}
+
+.authpage label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  text-align: left; /* Align labels to the left */
+}
+
+.authpage input {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  border: 1px solid #ced4da;
+  border-radius: 8px; /* More pronounced rounded corners */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease; /* Add transition for border */
+}
+
+.authpage input:focus {
+  outline: none; /* Remove default outline */
+  border-color: var(--secondary-color); /* Change border color on focus */
+  box-shadow: 0 0 0 2px rgba(0, 128, 138, 0.2); /* Add subtle box shadow on focus */
+}
+
+.authpage button[type="submit"] {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px; /* Increased padding */
+  border-radius: 8px; /* More pronounced rounded corners */
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.authpage button[type="submit"]:hover {
+  background-color: #00808a;
+  transform: translateY(-2px); /* Add a lift effect on hover */
 }

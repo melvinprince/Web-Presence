@@ -1,5 +1,7 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs"); // Import the fs module
+
 
 // console.log("fileUpload.js Triggered");
 // Storage configuration
@@ -33,5 +35,23 @@ const upload = multer({
 
 // console.log("fileUpload.js", upload);
 
+// Delete image function
+const deleteImage = (req, res, imageName) => {
+  const imagePath = `uploads/${imageName}`;
+  console.log("Deleting image:", imagePath);
 
-module.exports = upload;
+  fs.unlink(imagePath, (err) => {
+    if (err) {
+      console.error("Error deleting image:", err);
+      return res.status(500).json({ error: "Failed to delete image" }); 
+
+      // You might want to handle the error (e.g., throw it or log it)
+    } else {
+      console.log("Image deleted successfully!");
+       return res.status(200).json({ message: "Image deleted successfully", ok: true }); 
+
+    }
+  });
+};
+
+module.exports = { upload, deleteImage };

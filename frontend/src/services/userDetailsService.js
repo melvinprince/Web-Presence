@@ -68,4 +68,31 @@ const deleteEntry = async (category, index) => {
   }
 };
 
-export { addOrUpdateUserDetails, getUserDetails, uploadUserImage, deleteEntry };
+const deleteImage = async (imageName) => { 
+  console.log("triggered deleteImage from userDetailsService.js");
+  console.log("imageName", imageName);
+  
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.delete(`/user/delete-image/${imageName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log("response from deleteImage", response);
+        
+
+        if (response.status !== 200) {
+            throw new Error(`Failed to delete image: ${response.status} ${response.statusText}`);
+        }
+
+        return response.data; // Return any data from the server if needed
+
+    } catch (err) {
+        throw new Error(err.response?.data?.message || "Failed to delete image.");
+    }
+};
+
+
+export { addOrUpdateUserDetails, getUserDetails, uploadUserImage, deleteEntry, deleteImage };

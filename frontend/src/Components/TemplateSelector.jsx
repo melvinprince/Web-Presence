@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import "./css/templateselector.css";
-import blackAndWhitePreview from "../Templates/BlackAndWhite/preview.png";
-import minimalAndModernPreview from "../Templates/MinimalAndModern/preview.png";
-// import sleekfolioPreview from "../Templates/Sleekfolio/preview.png";
+import blackAndWhitePreview from "../Templates/BlackAndWhite/blackandwhitepreview.png";
+import minimalAndModernPreview from "../Templates/MinimalAndModern/minimalandmodernpreview.png";
+import sleekfolioPreview from "../Templates/Sleekfolio/sleekfoliopreview.png";
 
 export default function TemplateSelector() {
     return (
@@ -18,7 +18,7 @@ export default function TemplateSelector() {
                     <Link to="/template/minimal-and-modern">Minimal And Modern</Link>
                 </div>
                 <div className="template">
-                    {/* <img src={sleekfolioPreview} alt="Sleekfolio Template" /> */}
+                    <img src={sleekfolioPreview} alt="Sleekfolio Template" />
                     <Link to="/template/sleekfolio">Sleekfolio</Link>
                 </div>
             </div>

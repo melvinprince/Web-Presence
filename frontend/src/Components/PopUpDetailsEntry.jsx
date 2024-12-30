@@ -1,7 +1,7 @@
 import "./css/popupdetailsentry.css";
 import { uploadUserImage } from "../services/userDetailsService";
 import { useState, useEffect } from "react";
-import { deleteEntry } from "../services/userDetailsService";
+import { deleteEntry, deleteImage } from "../services/userDetailsService";
 
 export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails = {} }) {
     const [formData, setFormData] = useState({
@@ -135,6 +135,31 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         }
     };
 
+    const handleImageRemove = async () => {
+        try {
+            // 1. Make API call to delete image
+            const imageName = formData.image_url.split('/').pop(); 
+            console.log("imageName", imageName);
+            
+            const response = await deleteImage(imageName);
+            console.log("response", response);
+            
+
+            if (!response.ok) {
+            throw new Error(`Failed to delete image: ${response.status} ${response.statusText}`);
+            }
+
+            // 2. Clear the image URL in the form data
+            setFormData((prevState) => ({
+            ...prevState,
+            image_url: "",
+            }));
+
+        } catch (error) {
+            console.error("Error removing image:", error);
+        }
+        };
+
     return (
         <div className="popup-details-entry">
             <div className="popup-details-entry-content">
@@ -172,7 +197,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     </div>
 
                     {/* Profile Links */}
-                    <h3>Profile Links</h3>
+                    <h3 className="h3-gapping">Profile Links</h3>
                     {["linkedin", "github", "website"].map((link) => (
                         <div className="form-group" key={link}>
                             <label>{link.charAt(0).toUpperCase() + link.slice(1)}</label>
@@ -187,7 +212,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     ))}
 
                     {/* Education Section */}
-                    <h3>Education</h3>
+                    <h3 className="h3-gapping">Education</h3>
                     {formData.education.map((edu, index) => (
                         <div key={index} className="nested-form-group">
                             <input
@@ -215,13 +240,13 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 value={edu.major || ""}
                                 onChange={(e) => updateEntry("education", index, "major", e.target.value)}
                             />
-                            <button type="button" onClick={() => removeEntry("education", index)}>Remove</button>
+                            <button type="button" className="remove-btn" onClick={() => removeEntry("education", index)}>Remove</button>
                         </div>
                     ))}
                     <button type="button" onClick={() => addEntry("education")}>Add Education</button>
 
 
-                    <h3>Skills</h3>
+                    <h3 className="h3-gapping">Skills</h3>
                     <div className="form-group">
                         <input
                             placeholder="Skills (comma separated)"
@@ -230,7 +255,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                         />
                     </div>
 
-                    <h3>Languages</h3>
+                    <h3 className="h3-gapping">Languages</h3>
                     <div className="form-group">
                         <input
                             placeholder="Languages (comma separated)"
@@ -241,7 +266,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
 
                 
                     {/* Projects Section */}
-                    <h3>Projects</h3>
+                    <h3 className="h3-gapping">Projects</h3>
                     {formData.projects.map((project, index) => (
                         <div key={index} className="nested-form-group">
                             <input
@@ -261,13 +286,13 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 value={project.project_link || ""}
                                 onChange={(e) => updateEntry("projects", index, "project_link", e.target.value)}
                             />
-                            <button type="button" onClick={() => removeEntry("projects", index)}>Remove</button>
+                            <button type="button" className="remove-btn" onClick={() => removeEntry("projects", index)}>Remove</button>
                         </div>
                     ))}
                     <button type="button" onClick={() => addEntry("projects")}>Add Project</button>
 
                     {/* Experience Section */}
-                    <h3>Experience</h3>
+                    <h3 className="h3-gapping">Experience</h3>
                     {formData.experience.map((exp, index) => (
                         <div key={index} className="nested-form-group">
                             <input
@@ -295,7 +320,7 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                                 value={exp.end_date || ""} //Corrected line:  Use exp.end_date || ""
                                 onChange={(e) => updateEntry("experience", index, "end_date", e.target.value)}
                             />
-                            <button type="button" onClick={() => removeEntry("experience", index)}>Remove</button>
+                            <button type="button" className="remove-btn" onClick={() => removeEntry("experience", index)}>Remove</button>
                         </div>
                     ))}
                     <button type="button" onClick={() => addEntry("experience")}>Add Experience</button>
@@ -304,7 +329,12 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
                     <div className="form-group">
                         <label>Profile Image Upload (Optional)</label>
                         <input type="file" onChange={handleImageUpload} />
-                        {formData.image_url && <img src={formData.image_url} alt="Profile Preview" />}
+                        {formData.image_url && (
+                            <div className="image-preview">
+                                <img src={formData.image_url} alt="Profile Preview" />
+                                <button type="button" onClick={handleImageRemove} className="remove-btn">Remove Image</button>
+                            </div>
+                        )}
                     </div>
 
                     <button type="submit">Save Details</button>

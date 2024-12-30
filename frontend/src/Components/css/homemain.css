@@ -1,23 +1,56 @@
 .home-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    background-color: var(--secondary-color);
-    color: var(--primary-text-color);
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  padding: var(--spacing-medium);
 }
 
-.home-main h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 10px 0;
+.home-main .main-text {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px
 }
 
-.home-main p {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin: 0  0 20px 0;
-    max-width: 800px;
+.home-main .main-text h1 {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-medium);
+}
+
+.home-main .main-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.home-main .images {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative; /* Needed for absolute positioning of images */
+}
+
+.home-main .images img {
+  width: 450px; 
+  height: 600px; 
+  position: absolute; /* Allow images to overlap */
+  transition: transform 0.5s, opacity 0.5s;
+   cursor: pointer;
+}
+.home-main .images img:hover {
+  transform: scale(1.05); /* Add a slight zoom effect on hover */
+}
+
+/* Initial state: center image visible, others faded */
+.home-main .images img:nth-child(1) {
+  opacity: 0.2;
+  transform: translateX(-400px) scale(0.8); /* Position left and scale down */
+}
+.home-main .images img:nth-child(2) {
+  opacity: 1;
+}
+.home-main.images img:nth-child(3) {
+  opacity: 0.2;
+  transform: translateX(400px) scale(0.8); /* Position right and scale down */
 }

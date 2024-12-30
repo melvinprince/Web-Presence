@@ -5,6 +5,18 @@
   --secondary-color: #00ADB5;
   --primary-text-color: #222831;
   --secondary-text-color: #393E46;
+
+  --error-color: #d9534f; 
+  --success-color: #5cb85c;
+
+  --font-size-base: 16px;
+  --font-size-large: 20px;
+  --font-weight-bold: 700;
+
+  --spacing-small: 8px;
+  --spacing-medium: 16px; 
+
+  --breakpoint-medium: 768px; 
 }
 
 * {

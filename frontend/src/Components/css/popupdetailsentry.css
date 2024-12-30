@@ -1,89 +1,114 @@
-/* Styles for Popup Container */
+/* Popup Container */
 .popup-details-entry {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 1000;
+  z-index: 1000; /* Ensure it's on top of other elements */
 }
 
-.popup-details-entry img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
-/* Styles for Popup Content */
-.popup-details-entry-content {
-  width: 90%;
-  height: 90%;
-  background-color: #fff;
+.popup-details-entry .popup-details-entry-content { 
+  background-color: white;
+  padding: 30px;
   border-radius: 10px;
-  padding: 20px;
-  overflow-y: auto; /* Adds scrolling for overflow */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative; /* For close button positioning */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 800px; /* Limit the width for better readability */
+  width: 100%; /* Take up full width on smaller screens */
+  max-height: 90vh; /* Set max height to 90% of viewport height */
+  overflow-y: auto; /* Add scroll bar if content exceeds max height */
 }
 
 /* Close Button */
-.popup-details-entry-content .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #ff5e5e;
-  color: white;
+.popup-details-entry .close-button {
+  position: fixed; /* Set to fixed position */
+  top: 20px; /* Adjust distance from top as needed */
+  right: 20px; /* Adjust distance from right as needed */
+  background-color: transparent;
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 1001; /* Ensure it's above the popup content */
 }
 
-.popup-details-entry-content .close-button:hover {
-  background-color: #ff2e2e;
+/* Form Styling */
+.popup-details-entry .form-group {
+  margin-bottom: 20px;
 }
 
-/* Form Group Styles */
-.form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
+.popup-details-entry label {
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #333;
+  color: var(--primary-text-color); /* Use root CSS variable */
 }
 
-.form-group input {
+.popup-details-entry input,
+.popup-details-entry textarea {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  box-sizing: border-box;
 }
 
-/* Submit Button */
-button[type="submit"] {
+.popup-details-entry textarea {
+  height: 100px; /* Allow vertical resizing */
+}
+
+.h3-gapping {
   margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
+}
+
+/* Nested Form Groups (for Education, Projects, Experience) */
+.popup-details-entry .nested-form-group {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.popup-details-entry .nested-form-group input {
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.popup-details-entry button[type="submit"],
+.popup-details-entry button[type="button"] {
+  background-color: var(--secondary-color); /* Use root CSS variable */
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+.popup-details-entry button[type="submit"]:hover,
+.popup-details-entry button[type="button"]:hover {
+  background-color: #008c91; /* Slightly darker shade on hover */
+}
+
+.popup-details-entry .popup-details-entry-content .remove-btn {
+  background-color: var(--error-color); /* Red color for remove button */
+}
+
+.popup-details-entry .popup-details-entry-content .remove-btn:hover {
+  background-color: #ff3333; /* Slightly darker shade on hover */
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .popup-details-entry .popup-details-entry-content {
+    padding: 20px; /* Reduce padding on smaller screens */
+  }
+
+  .popup-details-entry .nested-form-group {
+    padding: 5px; /* Reduce padding in nested groups */
+  }
 }

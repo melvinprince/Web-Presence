@@ -12,10 +12,12 @@ import Sleekfolio from "./Templates/Sleekfolio/sleekfolio";
 
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState();
   
       // Simulate checking authentication status
       useEffect(() => {
+        console.log("Checking authentication status triggered");
+        
           // Replace this with actual authentication check
           const token = localStorage.getItem('token');
           if (token) {

@@ -1,4 +1,4 @@
-.calltoaction-button {
+/* .calltoaction-button {
   background-color: var(--primary-color);
   color: var(--primary-text-color);
   font-weight: 600;
@@ -13,4 +13,26 @@
 .calltoaction-button:hover {
   background-color: var(--primary-text-color);
   color: var(--secondary-color);
+} */
+
+.calltoaction { /* Style the link to remove underlines */
+  text-decoration: none; 
+}
+
+.calltoaction-button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 12px 24px; 
+  font-size: 1rem; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Add transitions */
+  font-weight: var(--font-weight-bold);
+}
+
+/* Hover effect */
+.calltoaction-button:hover {
+  background-color: #00808a; /* Slightly darker shade of teal */
+  transform: translateY(-2px); /* Slight lift */
 }

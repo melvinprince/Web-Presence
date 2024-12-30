@@ -3,7 +3,8 @@ const router = express.Router();
 const userControllers = require("../controllers/userControllers");
 const userDetailsControllers = require("../controllers/userDetailsControllers");
 const authMiddleware = require("../middleware/authMiddleware");
-const upload = require("../middleware/fileUpload");
+const { upload, deleteImage } = require("../middleware/fileUpload");
+
 
 // User routes
 router.post("/register", userControllers.createUser);
@@ -23,5 +24,14 @@ router.delete(
   authMiddleware,
   userDetailsControllers.deleteEntry
 ); 
+
+router.delete("/delete-image/:imageName", (req, res) => {
+  console.log("Image delete request received");
+  
+  const imageName = req.params.imageName;
+  console.log("Image name:", imageName);
+  
+  deleteImage(req, res, imageName); // Call the deleteImage function
+});
 
 module.exports = router;

@@ -1,17 +1,40 @@
 .header {
-    background-color: var(--primary-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
+  background-color: var(--primary-color); 
+  color: var(--primary-text-color);
+  padding: 20px 40px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  transition: background-color 0.3s ease; /* Add transition for background */
 }
 
-.header .logo {
-    margin-left: 2%;
+.header:hover {
+  background-color: #f0f0f5; /* Slightly lighter shade of gray on hover */
+}
+
+.header .logo a { 
+  color: var(--secondary-color); 
+  text-decoration: none;
+  font-size: var(--font-size-large); 
+  font-weight: var(--font-weight-bold); 
+  transition: transform 0.2s ease; /* Add transition for logo */
+}
+
+.header .logo a:hover {
+  transform: scale(1.05); /* Slightly increase logo size on hover */
 }
 
 .header .links {
-    display: flex;
-    gap: 10px;
-    margin-right: 2%;
+  display: flex; 
+  gap: var(--spacing-medium); 
+}
+
+.header .links a {
+  color: var(--primary-text-color);
+  text-decoration: none; 
+  transition: color 0.3s ease; /* Add transition for link color */
+}
+
+.header .links a:hover {
+  color: var(--secondary-color); /* Change link color to teal on hover */
 }

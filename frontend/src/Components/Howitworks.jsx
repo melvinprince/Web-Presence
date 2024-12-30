@@ -13,15 +13,15 @@ export default function Howitworks() {
             </p>
           </div>
           <div className="step">
-            <h3>Step 2: Choose a Template</h3>
+            <h3>Step 2: Enter Youre Details</h3>
             <p>
-              Select from a range of professional templates that suit your style and needs.
+              Provide the necessary information to create your portfolio, such as your name, profession, and skills.
             </p>
           </div>
           <div className="step">
-            <h3>Step 3: Customize</h3>
+            <h3>Step 3: Choose a Template</h3>
             <p>
-              Use our intuitive drag-and-drop editor to add your details and make it unique.
+              Select a template that best fits your style and customize it to make it your own.
             </p>
           </div>
           <div className="step">
