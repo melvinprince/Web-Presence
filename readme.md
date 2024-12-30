@@ -69,6 +69,7 @@ These instructions will get you a copy of the project up and running on your loc
 5. Start the development servers:
 
    Frontend: ```npm run dev``` in the frontend directory.
+   
    Backend: ```node server.js``` in the backend directory.
 
 ## Contributing
