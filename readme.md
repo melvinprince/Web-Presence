@@ -41,20 +41,22 @@ These instructions will get you a copy of the project up and running on your loc
 
    ```
 
-2. Install dependencies (frontend):
+2. **Install dependencies (frontend):**
 
-Bash
-cd web-presence/frontend
-npm install
-Install dependencies
+   ```Bash
+   cd web-presence/frontend
+   npm install
+   ```
 
-3. Bash
+3. **Install dependencies**
+
+   ```Bash
    cd web-presence/backend
    npm install
-   Configure environment variables:
+   ```
 
-4. Create .env file in backend
-   Set the follwoing data
+4. **Create .env file in backend**
+   ```Set the follwoing data
    DB_USER=
    DB_HOST=
    DB_DATABASE=
@@ -62,17 +64,20 @@ Install dependencies
    DB_PORT=5
    JWT_SECRET=
    REFRESH_TOKEN_SECRET=
+   ```  
 
 5. Start the development servers:
-   Frontend: npm run dev in the frontend directory.
-   Backend: node server.js in the backend directory.
 
-Contributing
+   Frontend: ```npm run dev``` in the frontend directory.
+   
+   Backend: ```node server.js``` in the backend directory.
+
+## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests.
 Here are some ways you can contribute:
 
-Report bugs
-Suggest new features
-Improve documentation
-Write code
+ - **Report bugs**
+ - **Suggest new features**
+ - **Improve documentation**
+ - **Write code**
