@@ -3,68 +3,35 @@ import CallToAction from "./CallToAction";
 import "./css/homemain.css";
 
 export default function HomeMain() {
-  const imagesRef = useRef(null); 
+  const imagesRef = useRef(null);
 
   useEffect(() => {
     let currentImage = 1;
-    let isScrollingImages = false; // Flag to track if scrolling images
+    let intervalId;
 
-    const handleScroll = (e) => {
-      if (isScrollingImages) {
-        e.preventDefault(); // Prevent default page scroll
+    const changeImage = () => {
+      const images = document.querySelectorAll('.images img');
 
-        const images = document.querySelectorAll('.images img');
-        const containerWidth = imagesRef.current.offsetWidth; 
-
-        // Calculate scroll amount and direction
-        let scrollAmount = e.deltaY * 1; // Adjust sensitivity
-        if (scrollAmount > containerWidth / 3) { 
-          scrollAmount = containerWidth / 3;
-        } else if (scrollAmount < -containerWidth / 3) {
-          scrollAmount = -containerWidth / 3;
-        }
-
-        // Update currentImage based on scroll direction
-        if (scrollAmount > 0) {
-          currentImage++;
-          if (currentImage > images.length) {
-            currentImage = 1;
-          }
-        } else if (scrollAmount < 0) {
-          currentImage--;
-          if (currentImage < 1) {
-            currentImage = images.length;
-          }
-        }
-
-        // Apply transformations based on currentImage
-        images.forEach((img, index) => {
-            if (index + 1 === currentImage) {
-                img.style.opacity = 1;
-                img.style.transform = 'translateX(0) scale(1) translateZ(100px)'; // Bring to front
-            } else if (index + 1 === currentImage - 1 || index + 1 === currentImage + 2) {
-                img.style.opacity = 0.5;
-                img.style.transform = 'translateX(-350px) scale(0.8) translateZ(-100px)'; // Push to back
-            } else {
-                img.style.opacity = 0.5;
-                img.style.transform = 'translateX(350px) scale(0.8) translateZ(-100px)'; // Push to back
-            }
-        });
+      currentImage++;
+      if (currentImage > images.length) {
+        currentImage = 1;
       }
+
+      images.forEach((img, index) => {
+        if (index + 1 === currentImage) {
+          img.style.opacity = 1;
+          img.style.transform = 'translateX(0) scale(1) translateZ(100px)'; 
+        } else if (index + 1 === currentImage - 1 || index + 1 === currentImage + 2) {
+          img.style.opacity = 0.5;
+          img.style.transform = 'translateX(-350px) scale(0.8) translateZ(-100px)'; 
+        } else {
+          img.style.opacity = 0.5;
+          img.style.transform = 'translateX(350px) scale(0.8) translateZ(-100px)'; 
+        }
+      });
     };
 
-    const handleMouseOver = () => {
-      isScrollingImages = true; 
-    };
-
-    const handleMouseOut = () => {
-      isScrollingImages = false; 
-    };
-
-    const imagesContainer = imagesRef.current;
-    imagesContainer.addEventListener('wheel', handleScroll, { passive: false });
-    imagesContainer.addEventListener('mouseover', handleMouseOver);
-    imagesContainer.addEventListener('mouseout', handleMouseOut);
+    intervalId = setInterval(changeImage, 1500); 
 
     const images = document.querySelectorAll('.images img');
     images.forEach((img, index) => {
@@ -72,15 +39,13 @@ export default function HomeMain() {
         img.style.opacity = 1;
         img.style.transform = 'translateX(0) scale(1) translateZ(100px)';
       } else {
-        img.style.opacity = 0.5;
+        img.style.opacity = 0.2;
         img.style.transform = 'translateX(-350px) scale(0.8) translateZ(-100px)';
       }
     });
-    
+
     return () => {
-      imagesContainer.removeEventListener('wheel', handleScroll);
-      imagesContainer.removeEventListener('mouseover', handleMouseOver);
-      imagesContainer.removeEventListener('mouseout', handleMouseOut);
+      clearInterval(intervalId); 
     };
   }, []);
     return (

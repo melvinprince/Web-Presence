@@ -22,11 +22,17 @@ export default function AuthPage() {
     if (activeTab === "signin") {
       try {
         const result = await loginUser(email, password);
+        if (result.error) {
+          return;
+        }
         localStorage.setItem("token", result.token);
+        console.log("Triggered");
+        
           navigate("/dashboard");
         // console.log(token);
       } catch (err) {
         setError(err.message );
+        return;
       }
     } else {
       if (password !== confirmPassword) {
