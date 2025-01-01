@@ -38,3 +38,8 @@
 .header .links a:hover {
   color: var(--secondary-color); /* Change link color to teal on hover */
 }
+
+.header .links-cond {
+  display: flex; 
+  gap: var(--spacing-medium); 
+}

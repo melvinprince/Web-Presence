@@ -42,6 +42,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (localStorage.getItem('token') === null) {
+        return;
+      }
       try {
         const data = await getUserDetails();
         if (data.user_id) {
@@ -94,7 +97,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Header />
+      <Header isDash={true}/>
       <div className="dashboard-content">
         <h1>Dashboard</h1>
         <button className="add-edit-button addedit-top" onClick={handleOpen}>Add/Edit Details</button> {/* Added class to button */}

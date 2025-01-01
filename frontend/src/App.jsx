@@ -30,7 +30,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={isAuthenticated ? <Dashboard /> : <Home />}/>
-        <Route path="/authpage" element={<AuthPage />} />
+        <Route path="/authpage" element={isAuthenticated ? <Dashboard /> : <AuthPage />} />
         <Route path="/logout" element={<LogoutHandler/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/support" element={<Support />} />

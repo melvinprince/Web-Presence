@@ -17,7 +17,7 @@ export default function HomeMain() {
         const containerWidth = imagesRef.current.offsetWidth; 
 
         // Calculate scroll amount and direction
-        let scrollAmount = e.deltaY * 0.5; // Adjust sensitivity
+        let scrollAmount = e.deltaY * 1; // Adjust sensitivity
         if (scrollAmount > containerWidth / 3) { 
           scrollAmount = containerWidth / 3;
         } else if (scrollAmount < -containerWidth / 3) {

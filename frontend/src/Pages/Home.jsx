@@ -5,9 +5,10 @@ import Howitworks from "../Components/Howitworks";
 import Features from "../Components/Features";
 
 export default function Home() {
+    
     return (
         <div>
-            <Header loggedIn={false} />
+            <Header />
             <HomeMain />
             <Features />
             <Howitworks />

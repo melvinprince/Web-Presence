@@ -76,12 +76,19 @@ export default function PopUpDetailsEntry({ handleClose, onSubmit, userDetails =
         setFormData((prev) => ({ ...prev, [field]: updatedField }));
     };
 
+   // In your PopUpDetailsEntry component
+
     const removeEntry = async (field, index) => {
-        await deleteEntry(field, index); 
-        
-        const updatedField = [...formData[field]];
-        updatedField.splice(index, 1);
-        setFormData((prev) => ({ ...prev, [field]: updatedField }));
+        const entryToRemove = formData[field][index]; 
+
+        if (Object.keys(entryToRemove).some((key) => entryToRemove[key])) { 
+            await deleteEntry(field, index); 
+        }
+                
+        setFormData((prev) => ({
+            ...prev,
+            [field]: prev[field].filter((_, i) => i !== index), 
+        }));
     };
 
     const handleSubmit = (e) => {

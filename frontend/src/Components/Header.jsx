@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './css/Header.css';
 
-export default function Header() {
+export default function Header(isDash) {
+    
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
@@ -25,7 +26,10 @@ export default function Header() {
             </div>
             <div className="links">
                 {isAuthenticated ? (
-                    <Link to="/logout" onClick={handleLogout}>Logout</Link>
+                    <div className="links-cond">
+                        <Link to="/logout" onClick={handleLogout}>Logout</Link>
+                        {!isDash && <Link to="/dashboard">Dashboard</Link>}
+                    </div>
                 ) : (
                     <Link to="/authpage">SignUp/SignIn</Link>
                 )}
