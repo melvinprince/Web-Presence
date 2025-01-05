@@ -2,7 +2,11 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import PopUpDetailsEntry from "../Components/PopUpDetailsEntry";
 import { useState, useEffect } from "react";
-import { addOrUpdateUserDetails, getUserDetails, deleteEntry } from "../services/userDetailsService";
+import {
+  addOrUpdateUserDetails,
+  getUserDetails,
+  deleteEntry,
+} from "../services/userDetailsService";
 import TemplateSelector from "../Components/TemplateSelector";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../actions/userActions";
@@ -37,12 +41,12 @@ export default function Dashboard() {
 
   const updateUserDataState = (data) => {
     setUserDetailsState(data);
-    localStorage.setItem('userDetails', JSON.stringify(data));
+    localStorage.setItem("userDetails", JSON.stringify(data));
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      if (localStorage.getItem('token') === null) {
+      if (localStorage.getItem("token") === null) {
         return;
       }
       try {
@@ -60,7 +64,13 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const handleUserDetailsSubmit = async (userData, profileLinks, education, projects, experience) => {
+  const handleUserDetailsSubmit = async (
+    userData,
+    profileLinks,
+    education,
+    projects,
+    experience
+  ) => {
     const formattedData = {
       userData,
       profileLinks,
@@ -84,12 +94,11 @@ export default function Dashboard() {
     try {
       await deleteEntry(category, index);
 
-      const updatedUserDetails = {...userDetails};
+      const updatedUserDetails = { ...userDetails };
       updatedUserDetails[category].splice(index, 1);
       updateUserDataState(updatedUserDetails);
 
       dispatch(setUserDetails(updatedUserDetails));
-
     } catch (error) {
       console.error("Error deleting entry:", error);
     }
@@ -97,43 +106,77 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Header isDash={true}/>
+      <Header isDash={true} />
       <div className="dashboard-content">
         <h1>Dashboard</h1>
-        <button className="add-edit-button addedit-top" onClick={handleOpen}>Add/Edit Details</button> {/* Added class to button */}
-
-        <div className="details-container"> 
-          <div className="user-details"> 
+        <button className="add-edit-button addedit-top" onClick={handleOpen}>
+          Add/Edit Details
+        </button>{" "}
+        {/* Added class to button */}
+        <div className="details-container">
+          <div className="user-details">
             {userDetails.userData.image_url && (
-              <img className="profile-image" src={userDetails.userData.image_url} alt="User Profile" />
+              <img
+                className="profile-image"
+                src={userDetails.userData.image_url}
+                alt="User Profilee"
+              />
             )}
-            <div className="user-info"> 
-              <h3>Name: </h3>{userDetails.userData.name}
-              <h3>Email: </h3>{userDetails.userData.email}
-              <h3>Title: </h3>{userDetails.userData.title}
-              <h3>About: </h3>{userDetails.userData.about}
-              <h3>Date of Birth: </h3>{userDetails.userData.date_of_birth}
-              <h3>Nationality: </h3>{userDetails.userData.nationality}
-              <h3>Current Country: </h3>{userDetails.userData.current_country}
+            <div className="user-info">
+              <h3>Name: </h3>
+              {userDetails.userData.name}
+              <h3>Email: </h3>
+              {userDetails.userData.email}
+              <h3>Title: </h3>
+              {userDetails.userData.title}
+              <h3>About: </h3>
+              {userDetails.userData.about}
+              <h3>Date of Birth: </h3>
+              {userDetails.userData.date_of_birth}
+              <h3>Nationality: </h3>
+              {userDetails.userData.nationality}
+              <h3>Current Country: </h3>
+              {userDetails.userData.current_country}
             </div>
           </div>
 
           <div className="profile-links">
             <ul>
-            <h3>Profile Links:</h3>
+              <h3>Profile Links:</h3>
               {userDetails.profileLinks.linkedin && (
                 <li>
-                  LinkedIn: <a href={userDetails.profileLinks.linkedin} target="_blank" rel="noreferrer">{userDetails.profileLinks.linkedin}</a>
+                  LinkedIn:{" "}
+                  <a
+                    href={userDetails.profileLinks.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {userDetails.profileLinks.linkedin}
+                  </a>
                 </li>
               )}
               {userDetails.profileLinks.github && (
                 <li>
-                  GitHub: <a href={userDetails.profileLinks.github} target="_blank" rel="noreferrer">{userDetails.profileLinks.github}</a>
+                  GitHub:{" "}
+                  <a
+                    href={userDetails.profileLinks.github}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {userDetails.profileLinks.github}
+                  </a>
                 </li>
               )}
               {userDetails.profileLinks.website && (
                 <li>
-                  Website: <a href={userDetails.profileLinks.website} target="_blank" rel="noreferrer">{userDetails.profileLinks.website}</a>
+                  Website:{" "}
+                  <a
+                    href={userDetails.profileLinks.website}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {userDetails.profileLinks.website}
+                  </a>
                 </li>
               )}
             </ul>
@@ -148,14 +191,20 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="sections"> 
-            <div className="section"> 
+          <div className="sections">
+            <div className="section">
               <h3>Education:</h3>
               <ul>
                 {userDetails.education.map((edu, index) => (
                   <li key={index}>
-                    Graduated in <em>{edu.graduation_year}</em> with a <em>{edu.degree}</em> in <em>{edu.major}</em> from <em>{edu.college_name}</em>
-                    <button onClick={() => handleDeleteEntry('education', index)}>Delete Entry</button>
+                    Graduated in <em>{edu.graduation_year}</em> with a{" "}
+                    <em>{edu.degree}</em> in <em>{edu.major}</em> from{" "}
+                    <em>{edu.college_name}</em>
+                    <button
+                      onClick={() => handleDeleteEntry("education", index)}
+                    >
+                      Delete Entry
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -167,30 +216,51 @@ export default function Dashboard() {
                 {userDetails.projects.map((project, index) => (
                   <li key={index}>
                     <em>{project.project_name}</em> : {project.project_outcome}
-                    {project.project_link && (<span> (<a href={project.project_link} target="_blank" rel="noreferrer">View Project</a>)</span>)}
-                    <button onClick={() => handleDeleteEntry('projects', index)}>Delete Entry</button>
+                    {project.project_link && (
+                      <span>
+                        {" "}
+                        (
+                        <a
+                          href={project.project_link}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          View Project
+                        </a>
+                        )
+                      </span>
+                    )}
+                    <button
+                      onClick={() => handleDeleteEntry("projects", index)}
+                    >
+                      Delete Entry
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
-
-            
 
             <div className="section">
               <h3>Experience:</h3>
               <ul>
                 {userDetails.experience.map((exp, index) => (
                   <li key={index}>
-                    <em>{exp.title}</em> at <em>{exp.company_name}</em> ({exp.start_date} - {exp.end_date})
-                    <button onClick={() => handleDeleteEntry('experience', index)}>Delete Entry</button>
+                    <em>{exp.title}</em> at <em>{exp.company_name}</em> (
+                    {exp.start_date} - {exp.end_date})
+                    <button
+                      onClick={() => handleDeleteEntry("experience", index)}
+                    >
+                      Delete Entry
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
         </div>
-
-        <button className="add-edit-button" onClick={handleOpen}>Add/Edit Details</button> 
+        <button className="add-edit-button" onClick={handleOpen}>
+          Add/Edit Details
+        </button>
       </div>
       <TemplateSelector userDetails={userDetails.userData} />
       {isPopupVisible && (
