@@ -9,7 +9,7 @@ class UserDetails {
     //   userData
     // );
 
-    // Preprocess userData to set undefined or empty fields to null
+    // Preprocess userData to set undefined or empty fields to null !
     Object.keys(userData).forEach((key) => {
       if (!userData[key]) {
         userData[key] = null; // Replace undefined or empty strings with null
@@ -25,7 +25,7 @@ class UserDetails {
       // );
 
       if (existingUser) {
-        // console.log("User details found, updating...");
+        // console.log("User details found, updating...");!
         const columns = Object.keys(userData);
         const values = Object.values(userData);
         const setClause = columns
@@ -74,7 +74,7 @@ class UserDetails {
       [user_id]
     );
     // console.log("Existing education:", existingEducation);
-    
+
     existingEducation.forEach((item) => existingIds.add(item.id));
 
     for (const edu of educationData) {
@@ -171,7 +171,7 @@ class UserDetails {
       [user_id]
     );
     // console.log("Existing experiences:", existingExperiences);
-    
+
     existingExperiences.forEach((item) => existingIds.add(item.id));
 
     for (const experience of experienceData) {
@@ -346,7 +346,7 @@ class UserDetails {
         [userId]
       );
       if (index < 0 || index >= educationCount.count) {
-        return null; 
+        return null;
       }
 
       // 2. Get the ID of the education entry to delete
@@ -378,7 +378,7 @@ class UserDetails {
         [userId]
       );
       if (index < 0 || index >= projectCount.count) {
-        return null; 
+        return null;
       }
 
       // 2. Get the ID of the project entry to delete
@@ -395,7 +395,7 @@ class UserDetails {
       await db.none(`DELETE FROM projects WHERE id = $1`, [projectId.id]);
 
       // 4. Fetch and return the updated project data (optional)
-      return await this.fetchProjects(userId); 
+      return await this.fetchProjects(userId);
     } catch (error) {
       console.error("Error deleting project entry:", error);
       throw error;
@@ -410,7 +410,7 @@ class UserDetails {
         [userId]
       );
       if (index < 0 || index >= experienceCount.count) {
-        return null; 
+        return null;
       }
 
       // 2. Get the ID of the experience entry to delete
@@ -427,14 +427,12 @@ class UserDetails {
       await db.none(`DELETE FROM experience WHERE id = $1`, [experienceId.id]);
 
       // 4. Fetch and return the updated experience data (optional)
-      return await this.fetchExperience(userId); 
+      return await this.fetchExperience(userId);
     } catch (error) {
       console.error("Error deleting experience entry:", error);
       throw error;
     }
   }
-
 }
 
 module.exports = UserDetails;
-

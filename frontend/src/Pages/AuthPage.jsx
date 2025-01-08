@@ -10,14 +10,14 @@ export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleChangeTab = (tab) => setActiveTab(tab);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); 
+    setError(null);
 
     if (activeTab === "signin") {
       try {
@@ -27,11 +27,11 @@ export default function AuthPage() {
         }
         localStorage.setItem("token", result.token);
         console.log("Triggered");
-        
-          navigate("/dashboard");
+
+        navigate("/dashboard");
         // console.log(token);
       } catch (err) {
-        setError(err.message );
+        setError(err.message);
         return;
       }
     } else {
@@ -49,7 +49,6 @@ export default function AuthPage() {
         // console.log("Successfully Registered", result.userId);
         localStorage.setItem("token", result.token);
         // console.log(token);
-        
       } catch (err) {
         setError(err.message);
       }
@@ -57,6 +56,7 @@ export default function AuthPage() {
   };
 
   return (
+    //authpage
     <div className="authpage">
       <Header />
       <div className="content">
